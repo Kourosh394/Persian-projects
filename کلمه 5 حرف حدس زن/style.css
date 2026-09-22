@@ -5,13 +5,13 @@
 
 body {
   background-color: skyblue;
-  font-family: B Homa, Arial;
+  font-family: "B Homa", Arial;
   font-size: 25px;
   text-align: center;
 }
 
 button {
-  font-family: B Homa, Arial;
+  font-family: "B Homa", Arial;
   font-size: 25px;
   background-color: green;
   color: white;
@@ -25,7 +25,7 @@ img {
 }
 
 input {
-  font-family: B Homa, Arial;
+  font-family: "B Homa", Arial;
   text-align: center;
   width: 100px;
   font-size: 20px;

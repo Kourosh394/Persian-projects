@@ -4,9 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>کلمه 5 حرف حدس زن</title>
-    <meta name="description"
-        content="بازی کلمه 5 حرف حدس زن؛ کلمه‌های 5 حرفی را حدس بزنید و قبل از بازی کلمه ذخیره کنید.">
-    <meta name="msvalidate.01" content="B760332CD52E9B592E375D808E6BBC21" />
     <link rel="icon" href="icon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
@@ -41,7 +38,7 @@
         let day = new Date().getDay();
         let getMoneyDay;
         if (dayILS != day && hour == startHour) {
-            document.getElementById("BMD").innerText = "پول روزانه همین الان.";
+            document.getElementById("BMD").innerText = "پول روزانه همین الان";
             getMoneyDay = true;
         } else if (hour > startHour) {
             document.getElementById("BMD").innerText = `پول روزانه ${(startHour + 24) - hour} ساعت دیگر`;
