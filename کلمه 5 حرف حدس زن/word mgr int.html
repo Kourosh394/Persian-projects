@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fa" dir="auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <title>انتخاب زبان کلمه</title>
+    <link rel="icon" href="icon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
+    <script src="https://kourosh394.github.io/Fast-change-files-for-projects/کلمه 5 حرف حدس زن/dateWords.js"></script>
+    <script>
+        if (localStorage.getItem("cache-g") != "getWordInGithub") {
+            window.location.href = 'main.html';
+        } else if (window.en.length != 5 || window.fa.length != 5 || window.fa.includes("-") || window.en.includes("-")) {
+            alert("مشکلی در کلمات است. لطفاً به کوروش بگویید.");
+            window.location.href = 'main.html';
+        }
+    </script>
+</head>
+
+<body>
+    <h1>با کدام زبان؟</h1>
+    <p id="money"></p>
+    <p id="words"></p>
+    <button onclick="enl()" id="enb">انگلیسی</button>
+    <button onclick="fal()" id="fab">فارسی</button>
+    <p id="alert" style="color: red;"></p>
+    <button onclick="window.location.href = 'main.html'">برگشت</button>
+    <script src="shared js.js"></script>
+    <script>
+        MAW();
+        function enl() {
+            let counter = 1;
+            while (words >= counter) {
+                if (window.en == localStorage.getItem(`W${counter}-g`)) {
+                    document.getElementById("alert").innerText = "این کلمه قبلاً ذخیره شده و شما نمیتوانید بازی کنید.";
+                    shake("enb");
+                    return;
+                }
+                counter++;
+            }
+            localStorage.setItem("cache-g", `i-${window.en}`);
+            words++;
+            MAW();
+            localStorage.setItem(`W${words}-g`, window.en);
+            window.location.href = 'game.html';
+        }
+        function fal() {
+            let counter = 1;
+            while (words >= counter) {
+                if (window.fa == localStorage.getItem(`W${counter}-g`)) {
+                    document.getElementById("alert").innerText = "این کلمه قبلاً ذخیره شده و شما نمیتوانید بازی کنید.";
+                    shake("fab");
+                    return;
+                }
+                counter++;
+            }
+            localStorage.setItem("cache-g", `i-${window.fa}`);
+            words++;
+            MAW();
+            localStorage.setItem(`W${words}-g`, window.fa);
+            window.location.href = 'game.html';
+        }
+    </script>
+</body>
+
+</html>

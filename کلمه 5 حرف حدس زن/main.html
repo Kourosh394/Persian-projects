@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fa" dir="auto">
+
+<head>
+    <meta charset="UTF-8">
+    <title>کلمه 5 حرف حدس زن</title>
+    <meta name="description"
+        content="بازی کلمه 5 حرف حدس زن؛ کلمه‌های 5 حرفی را حدس بزنید و قبل از بازی کلمه ذخیره کنید.">
+    <meta name="msvalidate.01" content="B760332CD52E9B592E375D808E6BBC21" />
+    <link rel="icon" href="icon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
+    <script src="shared js.js"></script>
+    <script>
+        if (localStorage.getItem("money-g") == null || localStorage.getItem("words-g") == null || localStorage.getItem("startHour-g") == null || localStorage.getItem("day-g") == null) {
+            localStorage.setItem("cache-g", "welcome");
+            window.location.href = 'welcome.html';
+        } else {
+            localStorage.removeItem("cache-g");
+        }
+    </script>
+</head>
+
+<body>
+    <img src="icon.png">
+    <p>________________________</p>
+    <h1>کلمه 5 حرف حدس زن</h1>
+    <p id="money"></p>
+    <p id="words"></p>
+    <p id="alert" style="color: red;"></p>
+    <button onclick="WordMGR()" class="BM">مدیر کلمات داخلی</button>
+    <button onclick="savedWord()" id="BS" class="BM">بازی با کلمه ی ذخیره شده</button>
+    <button onclick="WordInInternet()" id="BI" class="BM">بازی با کلمه ی به روز</button>
+    <button onclick="giveMoneyDay()" id="BMD" class="BM">پول روزانه</button>
+    <button onclick="reset()" class="BM">ریست</button>
+    <script>
+        MAW();
+        let startHour = localStorage.getItem("startHour-g");
+        let dayILS = localStorage.getItem("day-g");
+        let hour = new Date().getHours();
+        let day = new Date().getDay();
+        let getMoneyDay;
+        if (dayILS != day && hour == startHour) {
+            document.getElementById("BMD").innerText = "پول روزانه همین الان.";
+            getMoneyDay = true;
+        } else if (hour > startHour) {
+            document.getElementById("BMD").innerText = `پول روزانه ${(startHour + 24) - hour} ساعت دیگر`;
+        } else if (hour < startHour) {
+            document.getElementById("BMD").innerText = `پول روزانه ${(hour + 24) - startHour} ساعت دیگر`;
+        } else {
+            document.getElementById("BMD").innerText = "پول روزانه 24 ساعت دیگر";
+        }
+        function WordMGR() {
+            localStorage.setItem("cache-g", "WordMGR");
+            window.location.href = 'word mgr.html';
+        }
+        function savedWord() {
+            if (words >= 3) {
+                localStorage.setItem("cache-g", "chooseWord");
+                window.location.href = 'word mgr.html';
+            } else {
+                shake("BS");
+                document.getElementById("alert").innerText = "در بازی باید بیشتر از 3 کلمه باشد تا شما بازی با کلمه ی قدیمی کنید.";
+            }
+        }
+        function WordInInternet() {
+            localStorage.setItem("cache-g", "getWordInGithub");
+            window.location.href = 'word mgr int.html';
+        }
+        function giveMoneyDay() {
+            if (getMoneyDay) {
+                localStorage.setItem("cache-g", "giveMoneyDay");
+                localStorage.setItem("day-g", day);
+                window.location.href = 'giv mny day.html';
+            } else {
+                shake("BMD");
+                document.getElementById("alert").innerText = "شما نمیتوانید پول روزانه  بگیرید.";
+            }
+        }
+        function reset() {
+            localStorage.setItem("cache-g", "reset");
+            window.location.href = 'reset.html';
+        }
+    </script>
+</body>
+
+</html>

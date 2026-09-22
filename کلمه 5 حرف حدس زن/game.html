@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="fa" dir="auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <title>بازی</title>
+    <link rel="icon" href="icon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
+    <style>
+        #jone {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+        }
+
+        .BG {
+            width: 50px;
+            user-select: none;
+        }
+
+        #alert {
+            display: none;
+            color: red;
+            position: fixed;
+            bottom: 60px;
+            right: 50%;
+            transform: translateX(50%);
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .BG {
+                width: 100px;
+                margin: 10px;
+            }
+
+            #jone {
+                top: 120px;
+            }
+
+            #alert {
+                bottom: 120px;
+            }
+        }
+    </style>
+    <script>
+        let word = localStorage.getItem("cache-g");
+        let MW = 1;
+        if (word == null) {
+            window.location.href = 'main.html';
+        } else if (word.slice(0, 2) == "i-") {
+            word = word.slice(2);
+            MW = 5;
+        }
+        if (word.length != 5) {
+            window.location.href = 'main.html';
+        }
+    </script>
+</head>
+
+<body>
+    <h1 id="word" lang="auto" dir="auto"></h1>
+    <p id="money"></p>
+    <p id="words"></p>
+    <p id="jone"></p>
+    <button class="BG" onclick="LLE()">↑</button>
+    <button class="BG" onclick="LLF()">↑</button>
+    <button class="BG" onclick="LM()">↑</button>
+    <button class="BG" onclick="LN()">↑</button>
+    <br>
+    <button class="BG" id="engLetter" onclick="CEL()"></button>
+    <button class="BG" id="faLetter" onclick="CFL()"></button>
+    <button class="BG" id="markLetter" onclick="CM()"></button>
+    <button class="BG" id="number" onclick="CN()"></button>
+    <br>
+    <button class="BG" onclick="NLE()">↓</button>
+    <button class="BG" onclick="NLF()">↓</button>
+    <button class="BG" onclick="NM()">↓</button>
+    <button class="BG" onclick="NN()">↓</button>
+    <br>
+    <button onclick="CS()" style="position: relative; top: 10px;">فاصله</button>
+    <br>
+    <button onclick="window.location.href = 'main.html'" style="position: relative; top: 30px;">برگشت</button>
+    <p id="alert">شما پول ندارید.</p>
+    <button class="BG" id="help" onclick="help()"
+        style="position: fixed; bottom: 20px; right: 50%; transform: translateX(50%); margin: 0px;">💡</button>
+    <script src="shared js.js"></script>
+    <script>
+        MAW();
+        let jone = 4;
+        let l1 = "-";
+        let l2 = "-";
+        let l3 = "-";
+        let l4 = "-";
+        let l5 = "-";
+        let thinkWord;
+        let engLetter = "A";
+        let faLetters = ["آ", "ب", "پ", "ت", "ث", "ج", "چ", "ح", "خ", "د", "ذ", "ر", "ز", "ژ", "س", "ش", "ص", "ض", "ط", "ظ", "ع", "غ", "ف", "ق", "ک", "گ", "ل", "م", "ن", "و", "ه", "ی"];
+        let faNumber = 0;
+        let faLetter = faLetters[faNumber];
+        let markLetters = ["،", "؛", "؟", "!", "٫", "٬", "ـ", "…", "«", "»", "(", ")", "[", "]", "{", "}", "—", "+", "=", ".", ";", ",", "'", "\"", "_", "*", "/", "\\", "|", "@", "#", "$", "%", "&", "^", "~", "`", "<", ">"];
+        let markNumber = 0;
+        let markLetter = markLetters[markNumber];
+        let number = 0;
+        localStorage.removeItem("cache-g");
+        function WALShow() {
+            thinkWord = `${l1}${l2}${l3}${l4}${l5}`;
+            document.getElementById("word").innerText = thinkWord;
+            document.getElementById("engLetter").innerText = engLetter;
+            document.getElementById("faLetter").innerText = faLetter;
+            document.getElementById("markLetter").innerText = markLetter;
+            document.getElementById("number").innerText = number;
+            document.getElementById("jone").innerText = `جان ها: ${jone}/4`;
+            if (thinkWord == word) {
+                money = money + MW;
+                MAW();
+                localStorage.setItem("cache-g", word);
+                window.location.href = 'win.html';
+            } else if (jone == 0) {
+                document.getElementById("word").style.color = "red";
+                document.getElementById("word").innerText = `شما باختید. کلمه: ${word}`;
+                setTimeout(function () {
+                    window.location.href = 'main.html';
+                }, 1000);
+            }
+        }
+        WALShow();
+        function NLE() {
+            engLetter = String.fromCharCode(engLetter.charCodeAt() + 1);
+            if (engLetter == "[") {
+                engLetter = "A";
+            }
+            WALShow();
+        }
+        function NLF() {
+            faNumber++;
+            if (faNumber == 32) {
+                faNumber = 0;
+            }
+            faLetter = faLetters[faNumber];
+            WALShow();
+        }
+        function LLE() {
+            engLetter = String.fromCharCode(engLetter.charCodeAt() - 1);
+            if (engLetter == "@") {
+                engLetter = "Z";
+            }
+            WALShow();
+        }
+        function LLF() {
+            faNumber--;
+            if (faNumber == -1) {
+                faNumber = 31;
+            }
+            faLetter = faLetters[faNumber];
+            WALShow();
+        }
+        function NM() {
+            markNumber++;
+            if (markNumber == 39) {
+                markNumber = 0;
+            }
+            markLetter = markLetters[markNumber];
+            WALShow();
+        }
+        function LM() {
+            markNumber--;
+            if (markNumber == -1) {
+                markNumber = 38;
+            }
+            markLetter = markLetters[markNumber];
+            WALShow();
+        }
+        function NN() {
+            number++;
+            if (number == 10) {
+                number = 0;
+            }
+            WALShow();
+        }
+        function LN() {
+            number--;
+            if (number == -1) {
+                number = 9;
+            }
+            WALShow();
+        }
+        function joneCam() {
+            jone--;
+            if (jone != 0) {
+                document.getElementById("jone").style.color = "red";
+                SBE("word");
+                shake("jone");
+                setTimeout(function () {
+                    document.getElementById("jone").style.color = "black";
+                }, 1000);
+            }
+        }
+        function CFL() {
+            let CCJ = 1;
+            if (faLetter == word[0]) {
+                l1 = word[0];
+                CCJ = 0;
+            }
+            if (faLetter == word[1]) {
+                l2 = word[1];
+                CCJ = 0;
+            }
+            if (faLetter == word[2]) {
+                l3 = word[2];
+                CCJ = 0;
+            }
+            if (faLetter == word[3]) {
+                l4 = word[3];
+                CCJ = 0;
+            }
+            if (faLetter == word[4]) {
+                l5 = word[4];
+                CCJ = 0;
+            }
+            if (faLetter == "آ") {
+                if ("ا" == word[0]) {
+                    l1 = word[0];
+                    CCJ = 0;
+                }
+                if ("ا" == word[1]) {
+                    l2 = word[1];
+                    CCJ = 0;
+                }
+                if ("ا" == word[2]) {
+                    l3 = word[2];
+                    CCJ = 0;
+                }
+                if ("ا" == word[3]) {
+                    l4 = word[3];
+                    CCJ = 0;
+                }
+                if ("ا" == word[4]) {
+                    l5 = word[4];
+                    CCJ = 0;
+                }
+            }
+            if (CCJ == 1) {
+                joneCam();
+            }
+            WALShow();
+        }
+        function CEL() {
+            let CCJ = 1;
+            if (engLetter == word[0] || String.fromCharCode(engLetter.charCodeAt() + 32) == word[0]) {
+                l1 = word[0];
+                CCJ = 0;
+            }
+            if (engLetter == word[1] || String.fromCharCode(engLetter.charCodeAt() + 32) == word[1]) {
+                l2 = word[1];
+                CCJ = 0;
+            }
+            if (engLetter == word[2] || String.fromCharCode(engLetter.charCodeAt() + 32) == word[2]) {
+                l3 = word[2];
+                CCJ = 0;
+            }
+            if (engLetter == word[3] || String.fromCharCode(engLetter.charCodeAt() + 32) == word[3]) {
+                l4 = word[3];
+                CCJ = 0;
+            }
+            if (engLetter == word[4] || String.fromCharCode(engLetter.charCodeAt() + 32) == word[4]) {
+                l5 = word[4];
+                CCJ = 0;
+            }
+            if (CCJ == 1) {
+                joneCam();
+            }
+            WALShow();
+        }
+        function CM() {
+            let CCJ = 1;
+            if (markLetter == word[0]) {
+                l1 = word[0];
+                CCJ = 0;
+            }
+            if (markLetter == word[1]) {
+                l2 = word[1];
+                CCJ = 0;
+            }
+            if (markLetter == word[2]) {
+                l3 = word[2];
+                CCJ = 0;
+            }
+            if (markLetter == word[3]) {
+                l4 = word[3];
+                CCJ = 0;
+            }
+            if (markLetter == word[4]) {
+                l5 = word[4];
+                CCJ = 0;
+            }
+            if (CCJ == 1) {
+                joneCam();
+            }
+            WALShow();
+        }
+        function CN() {
+            let CCJ = 1;
+            if (number == word[0] || String.fromCharCode(String(number).charCodeAt() + 1728) == word[0]) {
+                l1 = word[0];
+                CCJ = 0;
+            }
+            if (number == word[1] || String.fromCharCode(String(number).charCodeAt() + 1728) == word[1]) {
+                l2 = word[1];
+                CCJ = 0;
+            }
+            if (number == word[2] || String.fromCharCode(String(number).charCodeAt() + 1728) == word[2]) {
+                l3 = word[2];
+                CCJ = 0;
+            }
+            if (number == word[3] || String.fromCharCode(String(number).charCodeAt() + 1728) == word[3]) {
+                l4 = word[3];
+                CCJ = 0;
+            }
+            if (number == word[4] || String.fromCharCode(String(number).charCodeAt() + 1728) == word[4]) {
+                l5 = word[4];
+                CCJ = 0;
+            }
+            if (CCJ == 1) {
+                joneCam();
+            }
+            WALShow();
+        }
+        function CS() {
+            let CCJ = 1;
+            if (" " == word[0]) {
+                l1 = word[0];
+                CCJ = 0;
+            }
+            if (" " == word[1]) {
+                l2 = word[1];
+                CCJ = 0;
+            }
+            if (" " == word[2]) {
+                l3 = word[2];
+                CCJ = 0;
+            }
+            if (" " == word[3]) {
+                l4 = word[3];
+                CCJ = 0;
+            }
+            if (" " == word[4]) {
+                l5 = word[4];
+                CCJ = 0;
+            }
+            if (CCJ == 1) {
+                joneCam();
+            }
+            WALShow();
+        }
+        function help() {
+            if (money > 0) {
+                let HL;
+                if (l1 == "-") {
+                    l1 = word[0];
+                    HL = word[0];
+                } else if (l2 == "-") {
+                    l2 = word[1];
+                    HL = word[1];
+                } else if (l3 == "-") {
+                    l3 = word[2];
+                    HL = word[2];
+                } else if (l4 == "-") {
+                    l4 = word[3];
+                    HL = word[3];
+                } else if (l5 == "-") {
+                    l5 = word[4];
+                    HL = word[4];
+                }
+                if (HL == word[0]) {
+                    l1 = word[0];
+                }
+                if (HL == word[1]) {
+                    l2 = word[1];
+                }
+                if (HL == word[2]) {
+                    l3 = word[2];
+                }
+                if (HL == word[3]) {
+                    l4 = word[3];
+                }
+                if (HL == word[4]) {
+                    l5 = word[4];
+                }
+                money--;
+                MAW();
+                WALShow();
+            } else {
+                document.getElementById("alert").style.display = "block";
+                SFTTXS("help");
+            }
+        }
+    </script>
+</body>
+
+</html>

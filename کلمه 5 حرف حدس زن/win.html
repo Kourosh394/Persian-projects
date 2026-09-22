@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fa" dir="auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <title id="title"></title>
+    <link rel="icon" href="icon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
+    <style>
+        div {
+            width: 50px;
+            height: 50px;
+            position: fixed;
+        }
+
+        @keyframes FTTD {
+            from {
+                transform: translateY(0%);
+            }
+
+            to {
+                transform: translateY(900%);
+            }
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            div {
+                width: 75px;
+                height: 75px;
+                position: fixed;
+            }
+
+            @keyframes FTTD {
+                from {
+                    transform: translateY(0%);
+                }
+
+                to {
+                    transform: translateY(1500%);
+                }
+            }
+        }
+    </style>
+    <script>
+        let word = localStorage.getItem("cache-g");
+        localStorage.removeItem("cache-g");
+        if (word == null || word.length != 5) {
+            window.location.href = 'main.html';
+        } else {
+            document.getElementById("title").innerText = `شما بردید🥳 کلمه: ${word}`;
+        }
+    </script>
+</head>
+
+<body>
+    <h1 id="h1"></h1>
+    <div id="S1"></div>
+    <div id="S2"></div>
+    <div id="S3"></div>
+    <div id="S4"></div>
+    <div id="S5"></div>
+    <div id="S6"></div>
+    <div id="S7"></div>
+    <div id="S8"></div>
+    <div id="S9"></div>
+    <div id="S10"></div>
+    <script>
+        let counter = 1;
+        let color;
+        let randomColor = Math.floor(Math.random() * 4);
+        document.getElementById("h1").innerText = `شما بردید🥳 کلمه: ${word}`;
+        while (counter <= 10) {
+            document.getElementById(`S${counter}`).style.top = `${Math.floor(Math.random() * 21) + 10}%`;
+            counter++;
+        }
+        counter = 1;
+        while (counter <= 10) {
+            document.getElementById(`S${counter}`).style.right = `${Math.floor(Math.random() * 81) + 10}%`;
+            counter++;
+        }
+        counter = 1;
+        while (counter <= 10) {
+            document.getElementById(`S${counter}`).style.animation = "FTTD 1s forwards";
+            counter++;
+        }
+        counter = 1;
+        while (counter <= 10) {
+            if (randomColor == 0) {
+                color = "blue";
+            } else if (randomColor == 1) {
+                color = "green";
+            } else if (randomColor == 2) {
+                color = "red";
+            } else {
+                color = "yellow";
+            }
+            document.getElementById(`S${counter}`).style.backgroundColor = color;
+            randomColor = Math.floor(Math.random() * 4);
+            counter++;
+        }
+        setTimeout(function () {
+            window.location.href = 'main.html';
+        }, 1000);
+    </script>
+</body>
+
+</html>

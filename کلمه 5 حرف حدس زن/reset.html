@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fa" dir="auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <title>ریست</title>
+    <link rel="icon" href="icon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
+    <script>
+        if (localStorage.getItem("cache-g") != "reset") {
+            window.location.href = 'main.html';
+        }
+    </script>
+</head>
+
+<body>
+    <h1 style="color: red;" id="H1">آیا میخواهید بازی را ریست کنید؟ چون کار ریست پاک کردن اطلاعات بازی است اما خود بازی نه.</h1>
+    <button onclick="reset()">بله</button>
+    <button onclick="window.location.href = 'main.html'">خیر</button>
+    <script src="shared js.js"></script>
+    <script>
+        function reset() {
+            let counter = 1;
+            while (words >= counter) {
+                localStorage.removeItem(`W${counter}-g`);
+                counter++;
+            }
+            localStorage.removeItem("words-g");
+            localStorage.removeItem("money-g");
+            localStorage.removeItem("startHour-g");
+            localStorage.removeItem("day-g");
+            localStorage.removeItem("cache-g");
+            document.getElementById("H1").style.color = "black";
+            document.getElementById("H1").innerText = "انجام شد. لطفاً صبر کنید.";
+            setTimeout(function () {
+                window.location.href = 'main.html';
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fa" dir="auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <title>پول روزانه</title>
+    <link rel="icon" href="icon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
+    <script>
+        if (localStorage.getItem("cache-g") != "giveMoneyDay"){
+            window.location.href = "main.html";
+        }
+    </script>
+</head>
+
+<body>
+    <p id="money"></p>
+    <p id="words"></p>
+    <h1 id="giveMoney"></h1>
+    <script src="shared js.js"></script>
+    <script>
+        MAW();
+        let counter = 1;
+        let giveMoney;
+        let chooseMoney = setInterval(function () {
+            giveMoney = Math.floor(Math.random() * 10) + 1;
+            document.getElementById("giveMoney").innerText = giveMoney;
+            if (counter >= 10) {
+                money = money + giveMoney;
+                MAW();
+                window.location.href = "main.html";
+                clearInterval(chooseMoney);
+            }
+            counter++;
+        }, 250);
+    </script>
+</body>
+
+</html>

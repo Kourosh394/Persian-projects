@@ -1,0 +1,127 @@
+@font-face {
+  font-family: B Homa;
+  src: url("B Homa.ttf");
+}
+
+body {
+  background-color: skyblue;
+  font-family: B Homa, Arial;
+  font-size: 25px;
+  text-align: center;
+}
+
+button {
+  font-family: B Homa, Arial;
+  font-size: 25px;
+  background-color: green;
+  color: white;
+  border-radius: 20%;
+  cursor: pointer;
+}
+
+img {
+  width: 100px;
+  height: 100px;
+}
+
+input {
+  font-family: B Homa, Arial;
+  text-align: center;
+  width: 100px;
+  font-size: 20px;
+}
+
+#money {
+  position: fixed;
+  top: 0px;
+  right: 20px;
+}
+
+#words {
+  position: fixed;
+  top: 40px;
+  right: 20px;
+}
+
+.BM {
+  display: block;
+  margin: 30px auto;
+}
+
+.shake {
+  animation: MTP 0.5s 1;
+}
+
+.SFTTXS {
+  animation: MTPFTTXS 0.5s 1;
+}
+
+.SBE {
+  animation: MOP 0.5s 1;
+}
+
+@keyframes MTP {
+  0% {
+    transform: translateX(0%);
+  }
+
+  25% {
+    transform: translateX(-10%);
+  }
+
+  50% {
+    transform: translateX(10%);
+  }
+
+  75% {
+    transform: translateX(-10%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes MOP {
+  0% {
+    transform: translateX(0%);
+  }
+
+  25% {
+    transform: translateX(-1%);
+  }
+
+  50% {
+    transform: translateX(1%);
+  }
+
+  75% {
+    transform: translateX(-1%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes MTPFTTXS {
+  0% {
+    transform: translateX(50%);
+  }
+
+  25% {
+    transform: translateX(40%);
+  }
+
+  50% {
+    transform: translateX(60%);
+  }
+
+  75% {
+    transform: translateX(40%);
+  }
+
+  100% {
+    transform: translateX(50%);
+  }
+}

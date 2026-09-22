@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fa" dir="auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <title>مدیر کلمات داخلی</title>
+    <link rel="icon" href="icon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
+    <style>
+        @media (hover: none) and (pointer: coarse) {
+            #word {
+                display: block;
+                margin: 10% auto 0px;
+            }
+        }
+    </style>
+    <script src="shared js.js"></script>
+    <script>
+        if (localStorage.getItem("cache-g") == "chooseWord") {
+            localStorage.setItem("cache-g", localStorage.getItem(`W${Math.floor(Math.random() * words) + 1}-g`));
+            window.location.href = 'game.html';
+        } else if (localStorage.getItem("cache-g") == "WordMGR") { } else {
+            window.location.href = 'main.html';
+        }
+    </script>
+</head>
+
+<body>
+    <input type="text" id="word" lang="auto" dir="auto">
+    <p id="money"></p>
+    <p id="words"></p>
+    <p id="alert"></p>
+    <button onclick="startGame()" class="BM">شروع بازی و ثبت با این کلمه</button>
+    <button onclick="saveWord()" class="BM">فقط ثبت کلمه</button>
+    <button onclick="deleteWord()" class="BM" id="BDLW">پاک کردن آخرین کلمه</button>
+    <button onclick="seeWord()" class="BM" id="BSLW">دیدن آخرین کلمه</button>
+    <button onclick="window.location.href = 'main.html'">برگشت</button>
+    <p style="color: red;">توجه: لطفا ایموجی، "-"، اعراب و کلمه ی غیر از 5 حرف وارد نکنید. ایموجی و اعراب مجبور به پاک کردن آخرین کلمه خواهند شد.</p>
+    <script>
+        MAW();
+        let word;
+        function butSaved(GTG) {
+            document.getElementById("alert").style.color = "black";
+            document.getElementById("alert").innerText = "این کلمه قبلاً ذخیره شده اما در بازی همین کلمه میاید.";
+            SBE("alert");
+            if (GTG == 1) {
+                setTimeout(function () {
+                    window.location.href = 'game.html';
+                }, 1000);
+            }
+        }
+        function checkWord() {
+            if (word.length != 5) {
+                document.getElementById("alert").style.color = "red";
+                document.getElementById("alert").innerText = "کلمه 5 حرفی نیست.";
+                shake("word");
+            }
+            if (word[0] == "-" || word[1] == "-" || word[2] == "-" || word[3] == "-" || word[4] == "-") {
+                document.getElementById("alert").style.color = "red";
+                document.getElementById("alert").innerText = 'کلمه "-" دارد.';
+                shake("word");
+            }
+        }
+        function startGame() {
+            word = document.getElementById("word").value;
+            if (word.length == 5 && word.includes("-") == false) {
+                localStorage.setItem("cache-g", word);
+                let counter = 1;
+                while (words >= counter) {
+                    if (word == localStorage.getItem(`W${counter}-g`)) {
+                        butSaved(1);
+                        return;
+                    }
+                    counter++;
+                }
+                words++;
+                MAW();
+                localStorage.setItem(`W${words}-g`, word);
+                window.location.href = 'game.html';
+            }
+            checkWord();
+        }
+        function saveWord() {
+            word = document.getElementById("word").value;
+            if (word.length == 5 && word.includes("-") == false) {
+                let counter = 1;
+                while (words >= counter) {
+                    if (word == localStorage.getItem(`W${counter}-g`)) {
+                        butSaved(0);
+                        MAW();
+                        return;
+                    }
+                    counter++;
+                }
+                words++;
+                MAW();
+                localStorage.setItem(`W${words}-g`, word);
+                document.getElementById("alert").style.color = "black";
+                document.getElementById("alert").innerText = "ثبت شد.";
+                SBE("alert");
+                MAW();
+            }
+            checkWord();
+        }
+        function deleteWord() {
+            if (words != 0) {
+                localStorage.removeItem(`W${words}-g`);
+                words--;
+                localStorage.setItem("words-g", words);
+                document.getElementById("alert").style.color = "black";
+                document.getElementById("alert").innerText = "پاک شد.";
+                SBE("alert");
+                MAW();
+            } else {
+                shake("BDLW");
+                document.getElementById("alert").style.color = "red";
+                document.getElementById("alert").innerText = "کلمه ای برای پاک کردن نیست.";
+            }
+        }
+        function seeWord() {
+            if (words != 0) {
+                document.getElementById("alert").style.color = "black";
+                document.getElementById("alert").innerText = `آخرین کلمه: ${localStorage.getItem(`W${words}-g`)}`;
+                SBE("alert");
+            } else {
+                shake("BSLW");
+                document.getElementById("alert").style.color = "red";
+                document.getElementById("alert").innerText = "کلمه ای برای دیدن نیست.";
+            }
+        }
+    </script>
+</body>
+
+</html>
