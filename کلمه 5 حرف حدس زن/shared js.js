@@ -11,7 +11,7 @@ window.onload = function () {
         audio.src = musicLocation;
         audio.loop = true;
         document.body.appendChild(audio);
-        let audioPlayButton = document.createElement("button");
+        let audioPlayButton = document.createElement("p");
         audioPlayButton.innerHTML = "🎵";
         audioPlayButton.className = "MPB";
         audioPlayButton.onclick = function () {

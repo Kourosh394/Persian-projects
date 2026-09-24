@@ -70,9 +70,7 @@ input {
 .MPB {
   position: fixed;
   left: 1%;
-  bottom: 50%;
-  transform: translateY(50%);
-  width: 10%;
+  top: 0%;
 }
 
 @keyframes MTP {
