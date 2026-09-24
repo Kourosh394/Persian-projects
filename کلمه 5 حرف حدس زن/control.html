@@ -22,7 +22,7 @@
     <p id="alertMusic"></p>
     <p style="color: red;">نکنه: به دلیل محدودیت های امنیتی مرورگر آهنگ به صورت خودکار پخش نمی شود به خاطر همین یه علامت 🎵 گوشه ی چپ بالای هر صفحه میاید و برای پخش آن را بزنید و مسیر آهنگ اینترنتی را بنویسید.</p>
     <button onclick="OKMB()">انتخاب کردن</button>
-    <button onclick="localStorage.removeItem('autoPlayMusic-g')">پاک کردن</button>
+    <button onclick="localStorage.removeItem('playMusicLocation-g')">پاک کردن</button>
     <div class="line"></div>
     <button onclick="window.location.reload()" class="BM">بار کردن مجدد صفحه</button>
     <button onclick="window.location.href = 'main.html'" class="BM">برگشت</button>
@@ -33,7 +33,7 @@
         function OKMB() {
             let musicLocation = document.getElementById("musicLocation").value;
             if (musicLocation.slice(-4) == ".mp3") {
-                localStorage.setItem("autoPlayMusic-g", musicLocation);
+                localStorage.setItem("playMusicLocation-g", musicLocation);
                 document.getElementById("alertMusic").innerText = "انجام شد.";
                 document.getElementById("alertMusic").style.color = "black";
                 SBE("alertMusic");

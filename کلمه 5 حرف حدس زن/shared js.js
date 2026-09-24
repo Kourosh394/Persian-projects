@@ -5,7 +5,7 @@ if (window.location.hostname != "kourosh394.github.io" && window.location.protoc
     window.location.href = "https://kourosh394.github.io/Persian-projects/کلمه 5 حرف حدس زن/main.html";
 }
 window.onload = function () {
-    let musicLocation = localStorage.getItem("autoPlayMusic-g");
+    let musicLocation = localStorage.getItem("playMusicLocation-g");
     if (musicLocation != null && musicLocation.slice(-4) == ".mp3") {
         let audio = document.createElement("audio");
         audio.src = musicLocation;
@@ -19,6 +19,13 @@ window.onload = function () {
             audioPlayButton.style.display = "none";
         };
         document.body.appendChild(audioPlayButton);
+        let musicTime = localStorage.getItem("musicTime-g");
+        if (musicTime != null) {
+            audio.currentTime = Number(musicTime);
+        }
+        setInterval(function () {
+            localStorage.setItem("musicTime-g", audio.currentTime);
+        }, 250);
     }
 };
 function checkLScacheG(LSValue) {
