@@ -21,7 +21,7 @@
     <input type="text" id="musicLocation" style="width: 80%;" lang="en" dir="ltr" placeholder="مکان آهنگ">
     <p id="alertMusic"></p>
     <p style="color: red;">نکنه: به دلیل محدودیت های امنیتی مرورگر آهنگ به صورت خودکار پخش نمی شود به خاطر همین یه دکمه
-        ی پخش آهنگ🎵 آخر هر صفحه میاید.</p>
+        ی پخش آهنگ🎵 آخر هر صفحه میاید و مسیر آهنگ اینترنتی را بنویسید.</p>
     <button onclick="OKMB()">انتخاب کردن</button>
     <button onclick="localStorage.removeItem('autoPlayMusic-g')">پاک کردن</button>
     <div class="line"></div>
@@ -33,9 +33,6 @@
         MAW();
         function OKMB() {
             let musicLocation = document.getElementById("musicLocation").value;
-            if (musicLocation.includes("\\")) {
-                musicLocation = `file:///${document.getElementById("musicLocation").value.replaceAll("\\", "/")}`;
-            }
             if (musicLocation.slice(-4) == ".mp3") {
                 localStorage.setItem("autoPlayMusic-g", musicLocation);
                 document.getElementById("alertMusic").innerText = "انجام شد.";
