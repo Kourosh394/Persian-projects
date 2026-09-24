@@ -7,21 +7,20 @@
     <link rel="icon" href="icon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
+    <script src="shared js.js"></script>
     <script>
-        if (localStorage.getItem("cache-g") != "welcome") {
-            window.location.href = 'main.html';
-        }
+        checkLScacheG("welcome");
     </script>
 </head>
 
 <body>
     <img src="icon.png">
-    <p>________________________</p>
+    <div class="line"></div>
     <h1>خوش آمدید به بازی کلمه 5 حرف حدس زن!</h1>
     <p>سازنده: کوروش فتح آبادی</p>
     <h1 style="display: inline;">©</h1>
     <p style="display: inline-block; transform: translateY(-20%);" lang="en" dir="auto">All rights reserved</p>
-    <p>________________________</p>
+    <div class="line"></div>
     <button onclick="main()">صفحه ی اصلی</button>
     <br><br>
     <script>

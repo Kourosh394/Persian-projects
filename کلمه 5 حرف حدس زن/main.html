@@ -20,7 +20,7 @@
 
 <body>
     <img src="icon.png">
-    <p>________________________</p>
+    <div class="line"></div>
     <h1>کلمه 5 حرف حدس زن</h1>
     <p id="money"></p>
     <p id="words"></p>
@@ -29,11 +29,11 @@
     <button onclick="savedWord()" id="BS" class="BM">بازی با کلمه ی ذخیره شده</button>
     <button onclick="WordInInternet()" id="BI" class="BM">بازی با کلمه ی به روز</button>
     <button onclick="giveMoneyDay()" id="BMD" class="BM">پول روزانه</button>
-    <button onclick="reset()" class="BM">ریست</button>
+    <button onclick="controlPanel()" class="BM">پنل کنترل</button>
     <script>
         MAW();
-        let startHour = localStorage.getItem("startHour-g");
-        let dayILS = localStorage.getItem("day-g");
+        let startHour = Number(localStorage.getItem("startHour-g"));
+        let dayILS = Number(localStorage.getItem("day-g"));
         let hour = new Date().getHours();
         let day = new Date().getDay();
         let getMoneyDay;
@@ -74,9 +74,9 @@
                 document.getElementById("alert").innerText = "شما نمیتوانید پول روزانه  بگیرید.";
             }
         }
-        function reset() {
-            localStorage.setItem("cache-g", "reset");
-            window.location.href = 'reset.html';
+        function controlPanel() {
+            localStorage.setItem("cache-g", "controlPanel");
+            window.location.href = 'control.html';
         }
     </script>
 </body>

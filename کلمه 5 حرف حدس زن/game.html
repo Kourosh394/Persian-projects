@@ -119,6 +119,10 @@
             } else if (jone == 0) {
                 document.getElementById("word").style.color = "red";
                 document.getElementById("word").innerText = `شما باختید. کلمه: ${word}`;
+                if (money > 0) {
+                    money--;
+                    MAW();
+                }
                 setTimeout(function () {
                     window.location.href = 'main.html';
                 }, 1000);

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fa" dir="auto">
+
+<head>
+    <meta charset="UTF-8">
+    <title>پنل کنترل</title>
+    <link rel="icon" href="icon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
+    <script src="shared js.js"></script>
+    <script>
+        checkLScacheG("controlPanel");
+    </script>
+</head>
+
+<body>
+    <h1>پنل کنترل</h1>
+    <p id="money"></p>
+    <p id="words"></p>
+    <h1>آهنگ</h1>
+    <input type="text" id="musicLocation" style="width: 80%;" lang="en" dir="ltr" placeholder="مکان آهنگ">
+    <p id="alertMusic"></p>
+    <p style="color: red;">نکنه: به دلیل محدودیت های امنیتی مرورگر آهنگ به صورت خودکار پخش نمی شود به خاطر همین یه دکمه
+        ی پخش آهنگ🎵 آخر هر صفحه میاید.</p>
+    <button onclick="OKMB()">انتخاب کردن</button>
+    <button onclick="localStorage.removeItem('autoPlayMusic-g')">پاک کردن</button>
+    <div class="line"></div>
+    <button onclick="window.location.reload()" class="BM">بار کردن مجدد صفحه</button>
+    <button onclick="window.location.href = 'main.html'" class="BM">برگشت</button>
+    <button onclick="reset()" class="BM">ریست</button>
+    <div class="line"></div>
+    <script>
+        MAW();
+        function OKMB() {
+            let musicLocation = document.getElementById("musicLocation").value;
+            if (musicLocation.includes("\\")) {
+                musicLocation = `file:///${document.getElementById("musicLocation").value.replaceAll("\\", "/")}`;
+            }
+            if (musicLocation.slice(-4) == ".mp3") {
+                localStorage.setItem("autoPlayMusic-g", musicLocation);
+                document.getElementById("alertMusic").innerText = "انجام شد.";
+                document.getElementById("alertMusic").style.color = "black";
+                SBE("alertMusic");
+            } else {
+                document.getElementById("alertMusic").innerText = "فایل mp3 نیست.";
+                document.getElementById("alertMusic").style.color = "red";
+                SBE("musicLocation");
+            }
+        }
+        function reset() {
+            localStorage.setItem("cache-g", "reset");
+            window.location.href = 'reset.html';
+        }
+    </script>
+</body>
+
+</html>

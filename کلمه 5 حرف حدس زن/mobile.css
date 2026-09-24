@@ -21,3 +21,7 @@ input {
 #words {
   top: 60px;
 }
+
+.line {
+  height: 5px;
+}

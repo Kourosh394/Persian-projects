@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
     <script src="https://kourosh394.github.io/HTML-change-fast-files/کلمه 5 حرف حدس زن/dateWords.js"></script>
+    <script src="shared js.js"></script>
     <script>
-        if (localStorage.getItem("cache-g") != "getWordInGithub") {
-            window.location.href = 'main.html';
-        } else if (window.en.length != 5 || window.fa.length != 5 || window.fa.includes("-") || window.en.includes("-")) {
+        checkLScacheG("getWordInGithub");
+        if (window.en.length != 5 || window.fa.length != 5 || window.fa.includes("-") || window.en.includes("-")) {
             alert("مشکلی در کلمات است. لطفاً به کوروش بگویید.");
             window.location.href = 'main.html';
         }
@@ -26,7 +26,6 @@
     <button onclick="fal()" id="fab">فارسی</button>
     <p id="alert" style="color: red;"></p>
     <button onclick="window.location.href = 'main.html'">برگشت</button>
-    <script src="shared js.js"></script>
     <script>
         MAW();
         function enl() {

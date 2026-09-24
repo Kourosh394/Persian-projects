@@ -7,10 +7,9 @@
     <link rel="icon" href="icon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
+    <script src="shared js.js"></script>
     <script>
-        if (localStorage.getItem("cache-g") != "giveMoneyDay"){
-            window.location.href = "main.html";
-        }
+        checkLScacheG("giveMoneyDay");
     </script>
 </head>
 
@@ -18,7 +17,6 @@
     <p id="money"></p>
     <p id="words"></p>
     <h1 id="giveMoney"></h1>
-    <script src="shared js.js"></script>
     <script>
         MAW();
         let counter = 1;
