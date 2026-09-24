@@ -37,7 +37,7 @@
         let hour = new Date().getHours();
         let day = new Date().getDay();
         let getMoneyDay;
-        if (dayILS != day && hour == startHour) {
+        if (dayILS < day && hour >= startHour) {
             document.getElementById("BMD").innerText = "پول روزانه همین الان";
             getMoneyDay = true;
         } else if (hour > startHour) {

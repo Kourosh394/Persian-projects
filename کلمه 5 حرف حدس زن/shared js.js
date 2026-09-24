@@ -2,7 +2,7 @@ let money = Number(localStorage.getItem("money-g"));
 let words = Number(localStorage.getItem("words-g"));
 if (window.location.hostname != "kourosh394.github.io" && window.location.protocol != "file:") {
     alert(`این بازی تقلبی کلمه 5 حرف حدس زن است. لینک تقلبی: ${decodeURIComponent(window.location.href)} لینک اصلی: https://kourosh394.github.io/HTMLCFF/faprgs/کلمه 5 حرف حدس زن/main.html OK را بزنید تا به نسخه ی اصلی بروید.`);
-    window.location.href = "https://kourosh394.github.io/HTMLCFF/faprgs/کلمه 5 حرف حدس زن/main.html";
+    window.location.href = "https://kourosh394.github.io/Persian-projects/کلمه 5 حرف حدس زن/main.html";
 }
 window.onload = function () {
     let musicLocation = localStorage.getItem("autoPlayMusic-g");
@@ -12,8 +12,8 @@ window.onload = function () {
         audio.loop = true;
         document.body.appendChild(audio);
         let audioPlayButton = document.createElement("button");
-        audioPlayButton.innerHTML = "پخش آهنگ🎵";
-        audioPlayButton.className = "BM";
+        audioPlayButton.innerHTML = "🎵";
+        audioPlayButton.className = "MPB";
         audioPlayButton.onclick = function () {
             audio.play();
             audioPlayButton.style.display = "none";
@@ -34,20 +34,20 @@ function MAW() {
     localStorage.setItem("words-g", words);
 }
 function shake(id) {
+    document.getElementById(id).classList.add("shake");
     setTimeout(function () {
-        document.getElementById(id).classList.add("shake");
-    }, 500)
-    document.getElementById(id).classList.remove("shake");
+        document.getElementById(id).classList.remove("shake");
+    }, 500);
 }
 function SFTTXS(id) {
+    document.getElementById(id).classList.add("SFTTXS");
     setTimeout(function () {
-        document.getElementById(id).classList.add("SFTTXS");
-    }, 500)
-    document.getElementById(id).classList.remove("SFTTXS");
+        document.getElementById(id).classList.remove("SFTTXS");
+    }, 500);
 }
 function SBE(id) {
+    document.getElementById(id).classList.add("SBE");
     setTimeout(function () {
-        document.getElementById(id).classList.add("SBE");
-    }, 500)
-    document.getElementById(id).classList.remove("SBE");
+        document.getElementById(id).classList.remove("SBE");
+    }, 500);
 }
