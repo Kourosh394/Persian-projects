@@ -22,29 +22,25 @@
     <h1 style="color: red;" id="H1">آیا میخواهید بازی را ریست کنید؟ چون کار ریست پاک کردن اطلاعات بازی است اما خود بازی
         نه.</h1>
     <button onclick="reset()">بله</button>
-    <button onclick="controlPanel()">خیر</button>
+    <button onclick="back()">خیر</button>
     <script>
         function reset() {
-            let counter = 1;
-            while (words >= counter) {
-                localStorage.removeItem(`W${counter}-g`);
-                counter++;
+            let RLS = Object.keys(localStorage);
+            let counter = RLS.length;
+            while (counter > 0) {
+                let LSRIN = RLS[counter - 1];
+                if (LSRIN.slice(-2) == "-g") {
+                    localStorage.removeItem(LSRIN);
+                }
+                counter--;
             }
-            localStorage.removeItem("words-g");
-            localStorage.removeItem("money-g");
-            localStorage.removeItem("startHour-g");
-            localStorage.removeItem("day-g");
-            localStorage.removeItem("cache-g");
-            localStorage.removeItem("playMusicLocation-g");
-            localStorage.removeItem("musicTime-g");
-            localStorage.removeItem("lastRandom-g");
             document.getElementById("H1").style.color = "black";
             document.getElementById("H1").innerText = "انجام شد. لطفاً صبر کنید.";
             setTimeout(function () {
                 window.location.href = "main.html";
             }, 1000);
         }
-        function controlPanel() {
+        function back() {
             localStorage.setItem("cache-g", "controlPanel");
             window.location.href = 'control.html';
         }

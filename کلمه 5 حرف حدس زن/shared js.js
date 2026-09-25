@@ -41,11 +41,15 @@ function MAW() {
     localStorage.setItem("words-g", words);
 }
 function random(max, min = 0) {
+    if (max <= min) {
+        return "error";
+    }
     let output = Math.floor(Math.random() * ((max - min) + 1)) + min;
-    while (output == Number(localStorage.getItem("lastRandom-g"))){
+    let randomName = `lastRandom ${decodeURIComponent(window.location.pathname.split("/").pop())} -g`;
+    while (output == Number(localStorage.getItem(randomName))){
         output = Math.floor(Math.random() * ((max - min) + 1)) + min;
     }
-    localStorage.setItem("lastRandom-g", output);
+    localStorage.setItem(randomName, output);
     return output;
 }
 function shake(id) {
