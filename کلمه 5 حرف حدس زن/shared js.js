@@ -40,6 +40,14 @@ function MAW() {
     document.getElementById("words").innerText = `کلمات: ${words}`;
     localStorage.setItem("words-g", words);
 }
+function random(max, min = 0) {
+    let output = Math.floor(Math.random() * ((max - min) + 1)) + min;
+    while (output == Number(localStorage.getItem("lastRandom-g"))){
+        output = Math.floor(Math.random() * ((max - min) + 1)) + min;
+    }
+    localStorage.setItem("lastRandom-g", output);
+    return output;
+}
 function shake(id) {
     document.getElementById(id).classList.add("shake");
     setTimeout(function () {

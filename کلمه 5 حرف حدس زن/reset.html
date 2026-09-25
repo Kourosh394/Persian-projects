@@ -7,6 +7,11 @@
     <link rel="icon" href="icon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
+    <style>
+        .MPB {
+            display: none;
+        }
+    </style>
     <script src="shared js.js"></script>
     <script>
         checkLScacheG("reset");
@@ -32,6 +37,7 @@
             localStorage.removeItem("cache-g");
             localStorage.removeItem("playMusicLocation-g");
             localStorage.removeItem("musicTime-g");
+            localStorage.removeItem("lastRandom-g");
             document.getElementById("H1").style.color = "black";
             document.getElementById("H1").innerText = "انجام شد. لطفاً صبر کنید.";
             setTimeout(function () {

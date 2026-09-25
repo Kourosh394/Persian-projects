@@ -18,7 +18,7 @@
     <script src="shared js.js"></script>
     <script>
         if (localStorage.getItem("cache-g") == "chooseWord") {
-            localStorage.setItem("cache-g", localStorage.getItem(`W${Math.floor(Math.random() * words) + 1}-g`));
+            localStorage.setItem("cache-g", localStorage.getItem(`W${random(words, 1)}-g`));
             window.location.href = 'game.html';
         } else if (localStorage.getItem("cache-g") == "WordMGR") { } else {
             window.location.href = 'main.html';
@@ -36,7 +36,8 @@
     <button onclick="deleteWord()" class="BM" id="BDLW">پاک کردن آخرین کلمه</button>
     <button onclick="seeWord()" class="BM" id="BSLW">دیدن آخرین کلمه</button>
     <button onclick="window.location.href = 'main.html'">برگشت</button>
-    <p style="color: red;">توجه: لطفا ایموجی، "-"، اعراب و کلمه ی غیر از 5 حرف وارد نکنید. ایموجی و اعراب مجبور به پاک کردن آخرین کلمه خواهند شد.</p>
+    <p style="color: red;">توجه: لطفا ایموجی، "-"، اعراب و کلمه ی غیر از 5 حرف وارد نکنید. ایموجی و اعراب مجبور به پاک
+        کردن آخرین کلمه خواهند شد.</p>
     <script>
         MAW();
         let word;

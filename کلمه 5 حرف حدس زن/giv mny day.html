@@ -22,7 +22,7 @@
         let counter = 1;
         let giveMoney;
         let chooseMoney = setInterval(function () {
-            giveMoney = Math.floor(Math.random() * 10) + 1;
+            giveMoney = random(10, 1);
             document.getElementById("giveMoney").innerText = giveMoney;
             if (counter >= 10) {
                 money = money + giveMoney;
