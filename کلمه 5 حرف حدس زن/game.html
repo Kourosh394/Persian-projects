@@ -120,7 +120,7 @@
             } else if (jone == 0) {
                 document.getElementById("word").style.color = "red";
                 document.getElementById("word").innerText = `شما باختید. کلمه: ${word}`;
-                if (money > 0) {
+                if (money >= 1) {
                     money--;
                     MAW();
                 }
@@ -359,37 +359,37 @@
             WALShow();
         }
         function help() {
-            if (money > 0) {
-                let HL;
+            if (money >= 1) {
+                let helpLetter;
                 if (l1 == "-") {
                     l1 = word[0];
-                    HL = word[0];
+                    helpLetter = word[0];
                 } else if (l2 == "-") {
                     l2 = word[1];
-                    HL = word[1];
+                    helpLetter = word[1];
                 } else if (l3 == "-") {
                     l3 = word[2];
-                    HL = word[2];
+                    helpLetter = word[2];
                 } else if (l4 == "-") {
                     l4 = word[3];
-                    HL = word[3];
+                    helpLetter = word[3];
                 } else if (l5 == "-") {
                     l5 = word[4];
-                    HL = word[4];
+                    helpLetter = word[4];
                 }
-                if (HL == word[0]) {
+                if (helpLetter == word[0]) {
                     l1 = word[0];
                 }
-                if (HL == word[1]) {
+                if (helpLetter == word[1]) {
                     l2 = word[1];
                 }
-                if (HL == word[2]) {
+                if (helpLetter == word[2]) {
                     l3 = word[2];
                 }
-                if (HL == word[3]) {
+                if (helpLetter == word[3]) {
                     l4 = word[3];
                 }
-                if (HL == word[4]) {
+                if (helpLetter == word[4]) {
                     l5 = word[4];
                 }
                 money--;
