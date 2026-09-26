@@ -45,12 +45,12 @@
     </style>
     <script>
         let word = localStorage.getItem("cache-g");
-        let MW = 1;
+        let MW = 0;
         if (word == null) {
             window.location.href = 'main.html';
         } else if (word.slice(0, 2) == "i-") {
             word = word.slice(2);
-            MW = 5;
+            MW = 2.5;
         }
         if (word.length != 5) {
             window.location.href = 'main.html';
@@ -59,7 +59,7 @@
 </head>
 
 <body>
-    <h1 id="word" lang="auto" dir="auto"></h1>
+    <h1 id="word" lang="auto" dir="auto" style="margin: 5% auto; width: 75%;"></h1>
     <p id="money"></p>
     <p id="words"></p>
     <p id="jone"></p>
@@ -112,6 +112,7 @@
             document.getElementById("number").innerText = number;
             document.getElementById("jone").innerText = `جان ها: ${jone}/10`;
             if (thinkWord == word) {
+                MW = Math.round(((jone / 3) + MW) * 2) / 2;
                 money = money + MW;
                 MAW();
                 localStorage.setItem("cache-g", word);

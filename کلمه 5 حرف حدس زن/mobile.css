@@ -8,6 +8,14 @@ button {
   height: 150px;
 }
 
+button:hover {
+  filter: none;
+}
+
+button:active {
+  filter: brightness(1.5);
+}
+
 img {
   width: 250px;
   height: 250px;
