@@ -59,7 +59,7 @@
 </head>
 
 <body>
-    <h1 id="word" lang="auto" dir="auto" style="margin: 5% auto; width: 75%;"></h1>
+    <h1 id="word" lang="auto" dir="auto"></h1>
     <p id="money"></p>
     <p id="words"></p>
     <p id="jone"></p>
@@ -118,8 +118,9 @@
                 localStorage.setItem("cache-g", word);
                 window.location.href = 'win.html';
             } else if (jone == 0) {
-                document.getElementById("word").style.color = "red";
-                document.getElementById("word").innerText = `شما باختید. کلمه: ${word}`;
+                document.body.innerHTML = `<h1 style="color: red;" class="SBE"> شما باختید. کلمه: ${word}</h1>
+                <p id="money"></p>
+                <p id="words"></p>`;
                 if (money >= 1) {
                     money--;
                     MAW();
