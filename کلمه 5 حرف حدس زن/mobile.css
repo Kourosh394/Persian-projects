@@ -6,6 +6,7 @@ body {
 button {
   font-size: 70px;
   height: 150px;
+  border-radius: 80px;
 }
 
 button:hover {

@@ -20,9 +20,15 @@
     <h1>آهنگ</h1>
     <input type="text" id="musicLocation" style="width: 80%;" lang="en" dir="ltr" placeholder="مکان آهنگ">
     <p id="alertMusic"></p>
-    <p style="color: red;">نکنه: به دلیل محدودیت های امنیتی مرورگر آهنگ به صورت خودکار پخش نمی شود به خاطر همین یه علامت 🎵 گوشه ی چپ بالای هر صفحه میاید و برای پخش آن را بزنید و مسیر آهنگ اینترنتی را بنویسید.</p>
+    <p style="color: red;" id="noneMusicS">نکنه: به دلیل محدودیت های امنیتی مرورگر آهنگ به صورت خودکار پخش نمی شود به
+        خاطر همین یه علامت 🎵 گوشه ی چپ بالای هر صفحه میاید و برای پخش آن را بزنید و مسیر آهنگ اینترنتی را بنویسید.</p>
     <button onclick="OKMB()">انتخاب کردن</button>
     <button onclick="localStorage.removeItem('playMusicLocation-g')">پاک کردن</button>
+    <div class="line"></div>
+    <h1>نقطه ی بازیابی</h1>
+    <p style="color: red;">نکته: فایل JS جای دیکر را نیاورید.</p>
+    <button onclick="setRP()" class="BM">بارگذاری نقطه ی بازیابی</button>
+    <button onclick="createRestorePoint()" class="BM">دانلود نقطه ی بازیابی</button>
     <div class="line"></div>
     <button onclick="window.location.reload()" class="BM">بار کردن مجدد صفحه</button>
     <button onclick="window.location.href = 'main.html'" class="BM">برگشت</button>
@@ -30,18 +36,27 @@
     <div class="line"></div>
     <script>
         MAW();
+        if (fileVersion == true) {
+            document.getElementById("noneMusicS").innerText = "نکنه: به دلیل محدودیت های امنیتی مرورگر آهنگ به صورت خودکار پخش نمی شود به خاطر همین یه علامت 🎵 گوشه ی چپ بالای هر صفحه میاید."
+        }
         function OKMB() {
             let musicLocation = document.getElementById("musicLocation").value;
+            if (fileVersion == true) {
+                musicLocation = `file:///${musicLocation.replaceAll("/", "\\")}`;
+            }
             if (musicLocation.slice(-4) == ".mp3") {
                 localStorage.setItem("playMusicLocation-g", musicLocation);
                 document.getElementById("alertMusic").innerText = "انجام شد.";
                 document.getElementById("alertMusic").style.color = "black";
-                SBE("alertMusic");
+                CWT("SBE", "alertMusic");
             } else {
                 document.getElementById("alertMusic").innerText = "فایل mp3 نیست.";
                 document.getElementById("alertMusic").style.color = "red";
-                SBE("musicLocation");
+                CWT("SBE", "musicLocation");
             }
+        }
+        function setRP() {
+            getRestorePoint(true);
         }
         function reset() {
             localStorage.setItem("cache-g", "reset");

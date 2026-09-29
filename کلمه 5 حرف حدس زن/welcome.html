@@ -22,7 +22,12 @@
     <p style="display: inline-block; transform: translateY(-20%);" lang="en" dir="auto">All rights reserved</p>
     <div class="line"></div>
     <button onclick="main()">صفحه ی اصلی</button>
-    <br><br>
+    <br>
+    <div class="line"></div>
+    <br>
+    <h1>اگر شما فایل JS  نقطه ی بازیابی رو دارید اینجا میتوانید وارد کنید.</h1>
+    <p style="color: red;">نکته: فایل JS جای دیکر را نیاورید.</p>
+    <button onclick="getRestorePoint()">انتخاب</button>
     <script>
         function main() {
             if (localStorage.getItem("money-g") == null) {

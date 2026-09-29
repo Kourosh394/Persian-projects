@@ -44,7 +44,7 @@
         function butSaved(GTG) {
             document.getElementById("alert").style.color = "black";
             document.getElementById("alert").innerText = "این کلمه قبلاً ذخیره شده اما در بازی همین کلمه میاید.";
-            SBE("alert");
+            CWT("alert", "SBE");
             if (GTG == 1) {
                 setTimeout(function () {
                     window.location.href = 'game.html';
@@ -55,12 +55,12 @@
             if (word.length != 5) {
                 document.getElementById("alert").style.color = "red";
                 document.getElementById("alert").innerText = "کلمه 5 حرفی نیست.";
-                shake("word");
+                CWT("word", "shake");
             }
             if (word[0] == "-" || word[1] == "-" || word[2] == "-" || word[3] == "-" || word[4] == "-") {
                 document.getElementById("alert").style.color = "red";
                 document.getElementById("alert").innerText = 'کلمه "-" دارد.';
-                shake("word");
+                CWT("word", "shake");
             }
         }
         function startGame() {
@@ -99,7 +99,7 @@
                 localStorage.setItem(`W${words}-g`, word);
                 document.getElementById("alert").style.color = "black";
                 document.getElementById("alert").innerText = "ثبت شد.";
-                SBE("alert");
+                CWT("alert", "SBE");
                 MAW();
             }
             checkWord();
@@ -111,10 +111,10 @@
                 localStorage.setItem("words-g", words);
                 document.getElementById("alert").style.color = "black";
                 document.getElementById("alert").innerText = "پاک شد.";
-                SBE("alert");
+                CWT("alert", "SBE");
                 MAW();
             } else {
-                shake("BDLW");
+                CWT("BDLW", "shake");
                 document.getElementById("alert").style.color = "red";
                 document.getElementById("alert").innerText = "کلمه ای برای پاک کردن نیست.";
             }
@@ -123,9 +123,9 @@
             if (words != 0) {
                 document.getElementById("alert").style.color = "black";
                 document.getElementById("alert").innerText = `آخرین کلمه: ${localStorage.getItem(`W${words}-g`)}`;
-                SBE("alert");
+                CWT("alert", "SBE");
             } else {
-                shake("BSLW");
+                CWT("BSLW", "shake");
                 document.getElementById("alert").style.color = "red";
                 document.getElementById("alert").innerText = "کلمه ای برای دیدن نیست.";
             }

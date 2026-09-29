@@ -87,7 +87,7 @@
     <script src="shared js.js"></script>
     <script>
         MAW();
-        let jone = 10;
+        let jone = 5;
         let l1 = "-";
         let l2 = "-";
         let l3 = "-";
@@ -98,7 +98,7 @@
         let faLetters = ["آ", "ب", "پ", "ت", "ث", "ج", "چ", "ح", "خ", "د", "ذ", "ر", "ز", "ژ", "س", "ش", "ص", "ض", "ط", "ظ", "ع", "غ", "ف", "ق", "ک", "گ", "ل", "م", "ن", "و", "ه", "ی"];
         let faNumber = 0;
         let faLetter = faLetters[faNumber];
-        let markLetters = ["،", "؛", "؟", "!", "٫", "٬", "ـ", "…", "«", "»", "(", ")", "[", "]", "{", "}", "—", "+", "=", ".", ";", ",", "'", "\"", "_", "*", "/", "\\", "|", "@", "#", "$", "%", "&", "^", "~", "`", "<", ">"];
+        let markLetters = ["،", "؛", "?", "؟", "!", "٫", "٬", "ـ", "…", "«", "»", "(", ")", "[", "]", "{", "}", "—", "+", "=", ".", ";", ",", "'", "\"", "_", "*", "/", "\\", "|", "@", "#", "$", "%", "&", "^", "~", "`", "<", ">"];
         let markNumber = 0;
         let markLetter = markLetters[markNumber];
         let number = 0;
@@ -110,7 +110,7 @@
             document.getElementById("faLetter").innerText = faLetter;
             document.getElementById("markLetter").innerText = markLetter;
             document.getElementById("number").innerText = number;
-            document.getElementById("jone").innerText = `جان ها: ${jone}/10`;
+            document.getElementById("jone").innerText = `جان ها: ${jone}/5`;
             if (thinkWord == word) {
                 MW = Math.round(((jone / 5) + MW) * 2) / 2;
                 money = money + MW;
@@ -118,13 +118,11 @@
                 localStorage.setItem("cache-g", word);
                 window.location.href = 'win.html';
             } else if (jone == 0) {
-                document.body.innerHTML = `<h1 style="color: red;" class="SBE"> شما باختید. کلمه: ${word}</h1>
-                <p id="money"></p>
-                <p id="words"></p>`;
                 if (money >= 1) {
                     money--;
                     MAW();
                 }
+                document.body.innerHTML = `<h1 style="color: red;" class="SBE"> شما باختید. کلمه: ${word}</h1>`;
                 setTimeout(function () {
                     window.location.href = 'main.html';
                 }, 1000);
@@ -163,7 +161,7 @@
         }
         function NM() {
             markNumber++;
-            if (markNumber == 39) {
+            if (markNumber == 40) {
                 markNumber = 0;
             }
             markLetter = markLetters[markNumber];
@@ -172,7 +170,7 @@
         function LM() {
             markNumber--;
             if (markNumber == -1) {
-                markNumber = 38;
+                markNumber = 39;
             }
             markLetter = markLetters[markNumber];
             WALShow();
@@ -195,8 +193,8 @@
             jone--;
             if (jone != 0) {
                 document.getElementById("jone").style.color = "red";
-                SBE("word");
-                shake("jone");
+                CWT("word", "SBE");
+                CWT("jone", "shake");
                 setTimeout(function () {
                     document.getElementById("jone").style.color = "black";
                 }, 1000);
@@ -398,7 +396,7 @@
                 WALShow();
             } else {
                 document.getElementById("alert").style.display = "block";
-                SFTTXS("help");
+                CWT("help", "SFTTXS");
             }
         }
     </script>

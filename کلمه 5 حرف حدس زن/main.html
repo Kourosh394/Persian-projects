@@ -29,14 +29,29 @@
     <button onclick="savedWord()" id="BS" class="BM">بازی با کلمه ی ذخیره شده</button>
     <button onclick="WordInInternet()" id="BI" class="BM">بازی با کلمه ی به روز</button>
     <button onclick="giveMoneyDay()" id="BMD" class="BM">پول روزانه</button>
+    <button onclick="downloadLV()" id="BD" class="BM">دانلود نسخه ی لوکال</button>
     <button onclick="controlPanel()" class="BM">پنل کنترل</button>
+    <script src="https://kourosh394.github.io/HTML-change-fast-files/کلمه%205%20حرف%20حدس%20زن/versionDay.js"></script>
     <script>
+        /*version:*/ let version = 1.0;
         MAW();
         let startHour = Number(localStorage.getItem("startHour-g"));
         let dayILS = Number(localStorage.getItem("day-g"));
         let hour = new Date().getHours();
         let day = new Date().getDay();
         let getMoneyDay;
+        let downloadLink = "https://kourosh394.github.io/Persian-projects/کلمه%205%20حرف%20حدس%20زن/کلمه%205%20حرف%20حدس%20زن.zip";
+        if (fileVersion == true) {
+            document.getElementById("BD").style.display = "none";
+        }
+        if (navigator.onLine == true && fileVersion == true && window.versionDay > version) {
+            let asKupdate = confirm("نسخه ی جدید آمده است🥳. آیا دانلود شود؟");
+            if (asKupdate == true) {
+                let DUpdate = document.createElement("a");
+                DUpdate.href = downloadLink;
+                DUpdate.download = true;
+            }
+        }
         if (dayILS < day && hour >= startHour) {
             document.getElementById("BMD").innerText = "پول روزانه همین الان";
             getMoneyDay = true;
@@ -56,13 +71,18 @@
                 localStorage.setItem("cache-g", "chooseWord");
                 window.location.href = 'word mgr.html';
             } else {
-                shake("BS");
+                CWT("BS", "shake");
                 document.getElementById("alert").innerText = "در بازی باید بیشتر از 3 کلمه باشد تا شما بازی با کلمه ی قدیمی کنید.";
             }
         }
         function WordInInternet() {
-            localStorage.setItem("cache-g", "getWordInGithub");
-            window.location.href = 'word mgr int.html';
+            if (fileVersion == true && navigator.onLine == false) {
+                CWT("BI", "shake");
+                document.getElementById("alert").innerText = "شما اینترنت ندارید.";
+            } else {
+                localStorage.setItem("cache-g", "getWordInGithub");
+                window.location.href = 'word mgr int.html';
+            }
         }
         function giveMoneyDay() {
             if (getMoneyDay) {
@@ -70,9 +90,13 @@
                 localStorage.setItem("day-g", day);
                 window.location.href = 'giv mny day.html';
             } else {
-                shake("BMD");
+                CWT("BMD", "shake");
                 document.getElementById("alert").innerText = "شما نمیتوانید پول روزانه  بگیرید.";
             }
+        }
+        async function downloadLV() {
+            await createRestorePoint();
+            window.location.href = downloadLink;
         }
         function controlPanel() {
             localStorage.setItem("cache-g", "controlPanel");

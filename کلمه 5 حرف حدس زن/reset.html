@@ -25,15 +25,7 @@
     <button onclick="back()">خیر</button>
     <script>
         function reset() {
-            let RLS = Object.keys(localStorage);
-            let counter = RLS.length;
-            while (counter > 0) {
-                let LSRIN = RLS[counter - 1];
-                if (LSRIN.slice(-2) == "-g") {
-                    localStorage.removeItem(LSRIN);
-                }
-                counter--;
-            }
+            deleteAllData();
             document.getElementById("H1").style.color = "black";
             document.getElementById("H1").innerText = "انجام شد. لطفاً صبر کنید.";
             setTimeout(function () {

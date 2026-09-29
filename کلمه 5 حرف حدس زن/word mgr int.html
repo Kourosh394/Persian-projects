@@ -33,7 +33,7 @@
             while (words >= counter) {
                 if (window.en == localStorage.getItem(`W${counter}-g`)) {
                     document.getElementById("alert").innerText = "این کلمه قبلاً ذخیره شده و شما نمیتوانید بازی کنید.";
-                    shake("enb");
+                    CWT("enb", "shake");
                     return;
                 }
                 counter++;
@@ -49,7 +49,7 @@
             while (words >= counter) {
                 if (window.fa == localStorage.getItem(`W${counter}-g`)) {
                     document.getElementById("alert").innerText = "این کلمه قبلاً ذخیره شده و شما نمیتوانید بازی کنید.";
-                    shake("fab");
+                    CWT("fab", "shake");
                     return;
                 }
                 counter++;
