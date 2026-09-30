@@ -63,15 +63,15 @@ function CWT(id, classFE, time = 1000) {
         document.getElementById(id).classList.remove(classFE);
     }, time);
 }
-function getRestorePoint(deleteAllDatas = false) {
+async function getRestorePoint(deleteAllDatas = false) {
     let restorePointInput = document.createElement("input");
     restorePointInput.type = "file";
     restorePointInput.accept = ".js";
     restorePointInput.style.display = "none";
     restorePointInput.click();
-    restorePointInput.addEventListener("change", function () {
+    restorePointInput.addEventListener("change", async function () {
         if (deleteAllDatas == true) {
-            deleteAllData();
+            await deleteAllData();
         }
         let codeJS = URL.createObjectURL(restorePointInput.files[0]);
         if (codeJS != false) {
