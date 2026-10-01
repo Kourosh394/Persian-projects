@@ -35,6 +35,11 @@ input {
   font-size: 20px;
 }
 
+input[type="checkbox"] {
+  width: 25px;
+  height: 25px;
+}
+
 #money {
   position: fixed;
   top: 0px;
@@ -45,6 +50,13 @@ input {
   position: fixed;
   top: 40px;
   right: 20px;
+}
+
+#MPB {
+  position: fixed;
+  left: 1%;
+  top: 0%;
+  cursor: pointer;
 }
 
 .BM {
@@ -69,13 +81,6 @@ input {
 
 .SBE {
   animation: MOP 0.5s 1;
-}
-
-.MPB {
-  position: fixed;
-  left: 1%;
-  top: 0%;
-  cursor: pointer;
 }
 
 @keyframes MTP {

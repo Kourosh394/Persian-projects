@@ -9,7 +9,19 @@ if (window.location.hostname != "kourosh394.github.io" && window.location.protoc
 if (window.location.protocol == "file:") {
     fileVersion = true;
 }
-window.onload = function () {
+function checkLScacheG(LSValue) {
+    if (localStorage.getItem("cache-g") != LSValue) {
+        window.location.href = "main.html";
+        return;
+    }
+}
+function MAW() {
+    document.getElementById("money").innerText = `💵: ${money}`;
+    localStorage.setItem("money-g", money);
+    document.getElementById("words").innerText = `کلمات: ${words}`;
+    localStorage.setItem("words-g", words);
+}
+function music(deleteDataes) {
     let musicLocation = localStorage.getItem("playMusicLocation-g");
     if (musicLocation != null && musicLocation.slice(-4) == ".mp3") {
         let audio = document.createElement("audio");
@@ -22,28 +34,24 @@ window.onload = function () {
         document.body.appendChild(audio);
         let audioPlayButton = document.createElement("p");
         audioPlayButton.innerHTML = "🎵";
-        audioPlayButton.className = "MPB";
+        audioPlayButton.id = "MPB";
         audioPlayButton.onclick = function () {
             audio.play();
             audioPlayButton.style.display = "none";
         };
         document.body.appendChild(audioPlayButton);
-        setInterval(function () {
+        let saveTime = setInterval(function () {
             localStorage.setItem("musicTime-g", audio.currentTime);
         }, 250);
+        if (deleteDataes == "deleteDataes") {
+            audio.pause();
+            clearInterval(saveTime);
+            localStorage.removeItem("playMusicLocation-g");
+            localStorage.removeItem("musicTime-g");
+            window.location.reload();
+            return;
+        }
     }
-};
-function checkLScacheG(LSValue) {
-    if (localStorage.getItem("cache-g") != LSValue) {
-        window.location.href = "main.html";
-        return;
-    }
-}
-function MAW() {
-    document.getElementById("money").innerText = `💵: ${money}`;
-    localStorage.setItem("money-g", money);
-    document.getElementById("words").innerText = `کلمات: ${words}`;
-    localStorage.setItem("words-g", words);
 }
 function random(max = 0, min = 0) {
     if (max <= min) {

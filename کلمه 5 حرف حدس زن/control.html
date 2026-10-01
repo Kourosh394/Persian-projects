@@ -23,7 +23,7 @@
     <p style="color: red;" id="noneMusicS">نکنه: به دلیل محدودیت های امنیتی مرورگر آهنگ به صورت خودکار پخش نمی شود به
         خاطر همین یه علامت 🎵 گوشه ی چپ بالای هر صفحه میاید و برای پخش آن را بزنید و مسیر آهنگ اینترنتی را بنویسید.</p>
     <button onclick="OKMB()">انتخاب کردن</button>
-    <button onclick="localStorage.removeItem('playMusicLocation-g')">پاک کردن</button>
+    <button onclick="music('deleteDataes')">پاک کردن</button>
     <div class="line"></div>
     <h1>نقطه ی بازیابی</h1>
     <p style="color: red;">نکته: فایل JS جای دیکر را نیاورید.</p>
@@ -36,12 +36,14 @@
     <div class="line"></div>
     <script>
         MAW();
+        music();
         if (fileVersion == true) {
-            document.getElementById("noneMusicS").innerText = "نکنه: به دلیل محدودیت های امنیتی مرورگر آهنگ به صورت خودکار پخش نمی شود به خاطر همین یه علامت 🎵 گوشه ی چپ بالای هر صفحه میاید."
+            document.getElementById("noneMusicS").innerText = "نکنه: به دلیل محدودیت های امنیتی مرورگر آهنگ به صورت خودکار پخش نمی شود به خاطر همین یه علامت 🎵 گوشه ی چپ بالای هر صفحه میاید.";
         }
         function OKMB() {
+            localStorage.removeItem("musicTime-g");
             let musicLocation = document.getElementById("musicLocation").value;
-            if (fileVersion == true) {
+            if (fileVersion == true && musicLocation.slice(0, 4) != "http") {
                 musicLocation = `file:///${musicLocation.replaceAll("/", "\\")}`;
             }
             if (musicLocation.slice(-4) == ".mp3") {

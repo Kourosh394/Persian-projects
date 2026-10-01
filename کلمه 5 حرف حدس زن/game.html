@@ -87,7 +87,8 @@
     <script src="shared js.js"></script>
     <script>
         MAW();
-        let jone = 5;
+        music();
+        let jone = 10;
         let l1 = "-";
         let l2 = "-";
         let l3 = "-";
@@ -110,15 +111,18 @@
             document.getElementById("faLetter").innerText = faLetter;
             document.getElementById("markLetter").innerText = markLetter;
             document.getElementById("number").innerText = number;
-            document.getElementById("jone").innerText = `جان ها: ${jone}/5`;
+            document.getElementById("jone").innerText = `جان ها: ${jone}/10`;
             if (thinkWord == word) {
                 MW = Math.round(((jone / 5) + MW) * 2) / 2;
+                if (MW == 0) {
+                    MW = 0.5;
+                }
                 money = money + MW;
                 MAW();
                 localStorage.setItem("cache-g", word);
                 window.location.href = 'win.html';
             } else if (jone == 0) {
-                if (money >= 1) {
+                if (money > 0) {
                     money--;
                     MAW();
                 }

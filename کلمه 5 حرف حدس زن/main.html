@@ -33,8 +33,9 @@
     <button onclick="controlPanel()" class="BM">پنل کنترل</button>
     <script src="https://kourosh394.github.io/HTML-change-fast-files/کلمه%205%20حرف%20حدس%20زن/versionDay.js"></script>
     <script>
-        /*version:*/ let version = 1.1;
+        /*version:*/ let version = 1.2;
         MAW();
+        music();
         let startHour = Number(localStorage.getItem("startHour-g"));
         let dayILS = Number(localStorage.getItem("day-g"));
         let hour = new Date().getHours();
@@ -47,9 +48,7 @@
         if (navigator.onLine == true && fileVersion == true && window.versionDay > version) {
             let asKupdate = confirm("نسخه ی جدید آمده است🥳. آیا دانلود شود؟");
             if (asKupdate == true) {
-                let DUpdate = document.createElement("a");
-                DUpdate.href = downloadLink;
-                DUpdate.download = true;
+                window.location.href = downloadLink;
             }
         }
         if (dayILS < day && hour >= startHour) {
