@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="fa" dir="auto">
+<!--All rights reserved © 2026
+Made by Kourosh Fathabadi-->
 
 <head>
     <meta charset="UTF-8">
@@ -29,11 +31,10 @@
     <button onclick="savedWord()" id="BS" class="BM">بازی با کلمه ی ذخیره شده</button>
     <button onclick="WordInInternet()" id="BI" class="BM">بازی با کلمه ی به روز</button>
     <button onclick="giveMoneyDay()" id="BMD" class="BM">پول روزانه</button>
-    <button onclick="downloadLV()" id="BD" class="BM">دانلود نسخه ی لوکال</button>
     <button onclick="controlPanel()" class="BM">پنل کنترل</button>
     <script src="https://kourosh394.github.io/HTML-change-fast-files/کلمه%205%20حرف%20حدس%20زن/versionDay.js"></script>
     <script>
-        /*version:*/ let version = 1.2;
+        /*version:*/ let version = 1.3;
         MAW();
         music();
         let startHour = Number(localStorage.getItem("startHour-g"));
@@ -41,10 +42,6 @@
         let hour = new Date().getHours();
         let day = new Date().getDay();
         let getMoneyDay;
-        let downloadLink = "https://kourosh394.github.io/Persian-projects/کلمه%205%20حرف%20حدس%20زن/کلمه%205%20حرف%20حدس%20زن.zip";
-        if (fileVersion == true) {
-            document.getElementById("BD").style.display = "none";
-        }
         if (navigator.onLine == true && fileVersion == true && window.versionDay > version) {
             let asKupdate = confirm("نسخه ی جدید آمده است🥳. آیا دانلود شود؟");
             if (asKupdate == true) {
@@ -92,10 +89,6 @@
                 CWT("BMD", "shake");
                 document.getElementById("alert").innerText = "شما نمیتوانید پول روزانه  بگیرید.";
             }
-        }
-        async function downloadLV() {
-            await createRestorePoint();
-            window.location.href = downloadLink;
         }
         function controlPanel() {
             localStorage.setItem("cache-g", "controlPanel");

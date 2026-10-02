@@ -31,6 +31,7 @@
     <button onclick="createRestorePoint()" class="BM">دانلود نقطه ی بازیابی</button>
     <div class="line"></div>
     <button onclick="window.location.reload()" class="BM">بار کردن مجدد صفحه</button>
+    <button onclick="downloadLV()" id="BD" class="BM">دانلود نسخه ی لوکال</button>
     <button onclick="window.location.href = 'main.html'" class="BM">برگشت</button>
     <button onclick="reset()" class="BM">ریست</button>
     <div class="line"></div>
@@ -39,6 +40,7 @@
         music();
         if (fileVersion == true) {
             document.getElementById("noneMusicS").innerText = "نکنه: به دلیل محدودیت های امنیتی مرورگر آهنگ به صورت خودکار پخش نمی شود به خاطر همین یه علامت 🎵 گوشه ی چپ بالای هر صفحه میاید.";
+            document.getElementById("BD").style.display = "none";
         }
         function OKMB() {
             localStorage.removeItem("musicTime-g");
@@ -63,6 +65,10 @@
         function reset() {
             localStorage.setItem("cache-g", "reset");
             window.location.href = 'reset.html';
+        }
+        async function downloadLV() {
+            await createRestorePoint();
+            window.location.href = downloadLink;
         }
     </script>
 </body>

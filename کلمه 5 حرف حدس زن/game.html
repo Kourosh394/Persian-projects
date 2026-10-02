@@ -132,6 +132,36 @@
                 }, 1000);
             }
         }
+        document.addEventListener("keydown", function (key) {
+            let letter = key.key;
+            if (letter.length == 1) {
+                let CCJ = 1;
+                if (letter == word[0]) {
+                    l1 = word[0];
+                    CCJ = 0;
+                }
+                if (letter == word[1]) {
+                    l2 = word[1];
+                    CCJ = 0;
+                }
+                if (letter == word[2]) {
+                    l3 = word[2];
+                    CCJ = 0;
+                }
+                if (letter == word[3]) {
+                    l4 = word[3];
+                    CCJ = 0;
+                }
+                if (letter == word[4]) {
+                    l5 = word[4];
+                    CCJ = 0;
+                }
+                if (CCJ == 1) {
+                    joneCam();
+                }
+                WALShow();
+            }
+        });
         WALShow();
         function NLE() {
             engLetter = String.fromCharCode(engLetter.charCodeAt() + 1);
