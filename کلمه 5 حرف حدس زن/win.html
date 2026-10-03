@@ -68,8 +68,6 @@
     <script src="shared js.js"></script>
     <script>
         let counter = 1;
-        let color;
-        let randomColor = random(4);
         document.getElementById("h1").innerText = `شما بردید🥳 کلمه: ${word}`;
         while (counter <= 10) {
             document.getElementById(`S${counter}`).style.top = `${random(30, 10)}%`;
@@ -87,17 +85,7 @@
         }
         counter = 1;
         while (counter <= 10) {
-            if (randomColor == 0) {
-                color = "blue";
-            } else if (randomColor == 1) {
-                color = "green";
-            } else if (randomColor == 2) {
-                color = "red";
-            } else {
-                color = "yellow";
-            }
-            document.getElementById(`S${counter}`).style.backgroundColor = color;
-            randomColor = random(4);
+            document.getElementById(`S${counter}`).style.backgroundColor = `rgb(${random(255)}, ${random(255)}, ${random(255)})`;
             counter++;
         }
         setTimeout(function () {

@@ -124,6 +124,9 @@
             } else if (jone == 0) {
                 if (money > 0) {
                     money--;
+                    if (money == -0.5) {
+                        money = 0;
+                    }
                     MAW();
                 }
                 document.body.innerHTML = `<h1 style="color: red;" class="SBE"> شما باختید. کلمه: ${word}</h1>`;
