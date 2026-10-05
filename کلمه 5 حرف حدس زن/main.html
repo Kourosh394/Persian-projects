@@ -9,7 +9,6 @@ Made by Kourosh Fathabadi-->
     <link rel="icon" href="icon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
-    <meta name="msvalidate.01" content="B760332CD52E9B592E375D808E6BBC21" />
     <script src="shared js.js"></script>
     <script>
         if (localStorage.getItem("money-g") == null || localStorage.getItem("words-g") == null || localStorage.getItem("startHour-g") == null || localStorage.getItem("day-g") == null) {
@@ -35,7 +34,7 @@ Made by Kourosh Fathabadi-->
     <button onclick="controlPanel()" class="BM">پنل کنترل</button>
     <script src="https://kourosh394.github.io/HTML-change-fast-files/کلمه%205%20حرف%20حدس%20زن/versionDay.js"></script>
     <script>
-        /*version:*/ let version = 1.4;
+        /*version:*/ let version = 1.5;
         MAW();
         music();
         let startHour = Number(localStorage.getItem("startHour-g"));
@@ -57,7 +56,7 @@ Made by Kourosh Fathabadi-->
         } else if (hour < startHour) {
             document.getElementById("BMD").innerText = `پول روزانه ${(hour + 24) - startHour} ساعت دیگر`;
         } else {
-            document.getElementById("BMD").innerText = "پول روزانه 24 ساعت دیگر";
+            document.getElementById("BMD").innerText = "پول روزانه 1 روز دیگر";
         }
         function WordMGR() {
             localStorage.setItem("cache-g", "WordMGR");

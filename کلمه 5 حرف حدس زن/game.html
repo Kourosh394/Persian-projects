@@ -88,7 +88,7 @@
     <script>
         MAW();
         music();
-        let jone = 10;
+        let jone = 15;
         let l1 = "-";
         let l2 = "-";
         let l3 = "-";
@@ -111,7 +111,7 @@
             document.getElementById("faLetter").innerText = faLetter;
             document.getElementById("markLetter").innerText = markLetter;
             document.getElementById("number").innerText = number;
-            document.getElementById("jone").innerText = `جان ها: ${jone}/10`;
+            document.getElementById("jone").innerText = `جان ها: ${jone}/15`;
             if (thinkWord == word) {
                 MW = Math.round(((jone / 5) + MW) * 2) / 2;
                 if (MW == 0) {
@@ -395,7 +395,7 @@
             WALShow();
         }
         function help() {
-            if (money >= 1) {
+            if (money >= 3) {
                 let helpLetter;
                 if (l1 == "-") {
                     l1 = word[0];
@@ -428,7 +428,7 @@
                 if (helpLetter == word[4]) {
                     l5 = word[4];
                 }
-                money--;
+                money -= 3;
                 MAW();
                 WALShow();
             } else {

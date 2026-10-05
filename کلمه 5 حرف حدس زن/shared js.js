@@ -5,12 +5,12 @@ let words = Number(localStorage.getItem("words-g"));
 let localStorages = Object.keys(localStorage);
 let fileVersion = false;
 let downloadLink = "https://kourosh394.github.io/Persian-projects/کلمه%205%20حرف%20حدس%20زن/کلمه%205%20حرف%20حدس%20زن.zip";
-if (window.location.hostname != "kourosh394.github.io" && window.location.protocol != "file:") {
-    alert(`این بازی تقلبی کلمه 5 حرف حدس زن است. لینک تقلبی: ${decodeURIComponent(window.location.href)} لینک اصلی: https://kourosh394.github.io/HTMLCFF/faprgs/کلمه 5 حرف حدس زن/main.html OK را بزنید تا به نسخه ی اصلی بروید.`);
-    window.location.href = "https://kourosh394.github.io/Persian-projects/کلمه 5 حرف حدس زن/main.html";
-}
 if (window.location.protocol == "file:") {
     fileVersion = true;
+}
+if (window.location.hostname != "kourosh394.github.io" && fileVersion == false) {
+    alert(`این بازی تقلبی کلمه 5 حرف حدس زن است. لینک تقلبی: ${decodeURIComponent(window.location.href)} لینک اصلی: https://kourosh394.github.io/HTMLCFF/faprgs/کلمه 5 حرف حدس زن/main.html OK را بزنید تا به نسخه ی اصلی بروید.`);
+    window.location.href = "https://kourosh394.github.io/Persian-projects/کلمه 5 حرف حدس زن/main.html";
 }
 function checkLScacheG(LSValue) {
     if (localStorage.getItem("cache-g") != LSValue) {
