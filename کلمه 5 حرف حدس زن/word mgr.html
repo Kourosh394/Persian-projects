@@ -28,6 +28,10 @@ Made by Kourosh Fathabadi-->
             user-select: none;
         }
 
+        .wordsAndFolders img {
+            width: auto;
+        }
+
         .setName {
             display: none;
             position: fixed;
@@ -98,6 +102,7 @@ Made by Kourosh Fathabadi-->
                 <button onclick="folderWords.splice(${counter}, 1); view()">حذف</button>
                 <input placeholder="ویرایش" id="editWord">
                 <button onclick="let word = document.getElementById('editWord').value; if (checkWord(word, 'editWord')) {folderWords[${counter}] = word; view()}">ثبت</button>
+                <button onclick="localStorage.setItem('cache-g', '${thisWord}'); window.location.href = 'game.html'">باز کردن</button>
                 `;
                 wordDiv.onclick = function () {
                     deselectAll();
@@ -124,6 +129,7 @@ Made by Kourosh Fathabadi-->
                 <button onclick="localStorage.removeItem('Word location:${locationFolder + thisFolder} -g'); view()">حذف</button>
                 <input placeholder="ویرایش" id="editFolderName">
                 <button onclick="renameFolder(document.getElementById('editFolderName'), 'editFolderName')">ثبت</button>
+                <button onclick="deselectAll(); control.innerHTML = ''; openFolder('${thisFolder}')">باز کردن</button>
                 `;
                 folderDiv.onclick = function () {
                     deselectAll();
