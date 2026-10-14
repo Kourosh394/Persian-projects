@@ -86,7 +86,7 @@ Made by Kourosh Fathabadi-->
         function view() {
             let contents = document.getElementById("contents");
             RLSSV();
-            folders = localStorages.filter(folder => folder.startsWith(`Word location:${locationFolder}`) && folder.length > 17).map(folder => folder.slice(14 + locationFolder.length, -3)).filter(folder => folder.split("/").length < 3 && folder.length > 0);
+            folders = localStorages.filter(folder => folder.startsWith("Word location:" + locationFolder) && folder.length > 17).map(folder => folder.slice(14 + locationFolder.length, -3)).filter(folder => folder.split("/").length < 3 && folder.length > 0);
             if (locationFolder != "") {
                 localStorage.setItem(`Word location:${locationFolder} -g`, folderWords.join("\n"));
             }
@@ -128,7 +128,7 @@ Made by Kourosh Fathabadi-->
                 let onclickEditControl = `
                 <button onclick="localStorage.removeItem('Word location:${locationFolder + thisFolder} -g'); view()">حذف</button>
                 <input placeholder="ویرایش" id="editFolderName">
-                <button onclick="renameFolder(document.getElementById('editFolderName'), 'editFolderName')">ثبت</button>
+                <button onclick="renameFolder('${thisFolder}', document.getElementById('editFolderName').value, 'editFolderName')">ثبت</button>
                 <button onclick="deselectAll(); control.innerHTML = ''; openFolder('${thisFolder}')">باز کردن</button>
                 `;
                 folderDiv.onclick = function () {
@@ -208,17 +208,17 @@ Made by Kourosh Fathabadi-->
                 locationFolder = "/";
             }
             folderWords = localStorage.getItem(`Word location:${locationFolder} -g`).split("\n").filter(word => word.length > 0);
-            folders = localStorages.filter(folder => folder.startsWith(`Word location:${locationFolder}`) && folder.length > 17).map(folder => folder.slice(14 + locationFolder.length, -3));
+            folders = localStorages.filter(folder => folder.startsWith("Word location:" + locationFolder) && folder.length > 17).map(folder => folder.slice(14 + locationFolder.length, -3));
             view();
         }
-        function renameFolder(folderName, SID) {
+        function renameFolder(LFN, folderName, SID) {
             if (checkFolderName(folderName, SID)) {
                 if (locationFolder[locationFolder.length - 1] == "/") {
-                    localStorage.setItem(`Word location:${locationFolder + folderName} -g`, localStorage.getItem(`Word location:${locationFolder + folderName} -g`));
-                    localStorage.removeItem(`Word location:${locationFolder + folderName} -g`)
+                    localStorage.setItem(`Word location:${locationFolder + folderName}/ -g`, localStorage.getItem(`Word location:${locationFolder + LFN} -g`));
+                    localStorage.removeItem(`Word location:${locationFolder + LFN} -g`)
                 } else {
-                    localStorage.setItem(`Word location:${locationFolder}/${folderName} -g`, localStorage.getItem(`Word location:${locationFolder}/${folderName} -g`));
-                    localStorage.removeItem(`Word location:${locationFolder}/${folderName} -g`)
+                    localStorage.setItem(`Word location:${locationFolder}/${folderName}/ -g`, localStorage.getItem(`Word location:${locationFolder}/${LFN} -g`));
+                    localStorage.removeItem(`Word location:${locationFolder}/${LFN} -g`)
                 }
             }
             view();

@@ -98,7 +98,7 @@ Made by Kourosh Fathabadi-->
         let markLetter = markLetters[markNumber];
         let number = 0;
         localStorage.removeItem("cache-g");
-        function WALShow() {
+        async function WALShow() {
             thinkWord = `${l1}${l2}${l3}${l4}${l5}`;
             document.getElementById("word").innerText = thinkWord;
             document.getElementById("engLetter").innerText = engLetter;
@@ -124,7 +124,7 @@ Made by Kourosh Fathabadi-->
                     moneyG();
                 }
                 document.body.innerHTML = `<h1 style="color: red;" class="SBE"> شما باختید. کلمه: ${word}</h1>`;
-                setTimeout(function () {
+                await setTimeout(function () {
                     window.location.href = 'main.html';
                 }, 1000);
             }

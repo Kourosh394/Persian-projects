@@ -5,8 +5,10 @@ let localStorages = Object.keys(localStorage).filter(LSFG => LSFG.endsWith("-g")
 let fileVersion = false;
 let downloadLink = "https://kourosh394.github.io/Persian-projects/کلمه%205%20حرف%20حدس%20زن/کلمه%205%20حرف%20حدس%20زن.zip";
 window.addEventListener("error", function (bug) {
-    alert(`error: ${bug.error}.`);
-    alert("لطفا به کوروش بگویید.")
+    if (disableErrors == false) {
+        alert(`error: ${bug.error}.`);
+        alert("لطفا به کوروش بگویید.");
+    }
 });
 if (localStorage.getItem("words-g") != null) {
     localStorage.removeItem("words-g");
