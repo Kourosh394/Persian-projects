@@ -22,7 +22,7 @@ Made by Kourosh Fathabadi-->
     <p id="alertMusic"></p>
     <p style="color: red;" id="noneMusicS">نکنه: به دلیل محدودیت های امنیتی مرورگر آهنگ به صورت خودکار پخش نمی شود به
         خاطر همین یه علامت 🎵 گوشه ی چپ بالای هر صفحه میاید و برای پخش آن را بزنید و مسیر آهنگ اینترنتی را بنویسید.</p>
-    <button onclick="OKMB()">انتخاب کردن</button>
+    <button onclick="getRestorePoint('DADAT');">انتخاب کردن</button>
     <button onclick="music('deleteDataes')">پاک کردن</button>
     <div class="line"></div>
     <h1>نقطه ی بازیابی</h1>
@@ -58,9 +58,6 @@ Made by Kourosh Fathabadi-->
                 document.getElementById("alertMusic").style.color = "red";
                 CWT("musicLocation", "SBE");
             }
-        }
-        function setRP() {
-            getRestorePoint(true);
         }
         function reset() {
             localStorage.setItem("cache-g", "reset");

@@ -1,19 +1,21 @@
 /*All rights reserved © 2026
 Made by Kourosh Fathabadi*/
 let money = Number(localStorage.getItem("money-g"));
-let localStorages = Object.keys(localStorage).filter(LSFG => LSFG.endsWith("-g"));
 let fileVersion = false;
+let localStorages = Object.keys(localStorage).filter(LSFG => LSFG.endsWith("-g"));
 let downloadLink = "https://kourosh394.github.io/Persian-projects/کلمه%205%20حرف%20حدس%20زن/کلمه%205%20حرف%20حدس%20زن.zip";
 window.addEventListener("error", function (bug) {
-    if (disableErrors == false) {
-        alert(`error: ${bug.error}.`);
-        alert("لطفا به کوروش بگویید.");
-    }
+    alert(`error: ${bug.error}.`);
+    alert("لطفا به کوروش بگویید.");
 });
 if (localStorage.getItem("words-g") != null) {
     localStorage.removeItem("words-g");
     localStorage.setItem("Word location:/ -g", localStorages.filter(wordLSN => wordLSN.startsWith("W")).map(wordLSN => localStorage.getItem(wordLSN)).join("\n"));
 }
+if (localStorage.getItem("W1-g") != null) {
+    localStorages.filter(wordLSN => wordLSN.startsWith("W")).map(wordLSN => localStorage.removeItem(wordLSN));
+}
+RLSSV();
 document.addEventListener("keydown", function (keydownforbug) {
     if (keydownforbug.key == "Escape") {
         document.body.innerHTML = `<h1>الان میتوانید با خیال راحت بازی رو ببندید.</h1>
@@ -93,20 +95,23 @@ function CWT(id, classFE, time = 1000) {
         document.getElementById(id).classList.remove(classFE);
     }, time);
 }
-async function getRestorePoint(deleteAllDatas = false) {
+async function getRestorePoint(doWorkWith) {
     let restorePointInput = document.createElement("input");
     restorePointInput.type = "file";
     restorePointInput.accept = ".js";
     restorePointInput.style.display = "none";
     restorePointInput.click();
     restorePointInput.addEventListener("change", async function () {
-        if (deleteAllDatas == true) {
+        if (doWorkWith == "DADAT") {
             await deleteAllData();
         }
-        let codeJS = URL.createObjectURL(restorePointInput.files[0]);
+        let codeJS = restorePointInput.files[0];
+        if (doWorkWith == "OGT") {
+            return codeJS.text();
+        }
         if (codeJS != false) {
             let JS = document.createElement("script");
-            JS.src = codeJS;
+            JS.src = URL.createObjectURL(codeJS);
             document.body.appendChild(JS);
             window.location.href = "main.html";
         }

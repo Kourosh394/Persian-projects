@@ -41,16 +41,10 @@ Made by Kourosh Fathabadi-->
 
         #contents {
             width: 99%;
-            height: 400px;
+            height: 50vh;
             border: 5px solid black;
             margin: auto;
             overflow-x: auto;
-        }
-
-        @media (hover: none) and (pointer: coarse) {
-            #contents {
-                height: 1000px;
-            }
         }
     </style>
     <script src="kernel.js"></script>
@@ -61,7 +55,7 @@ Made by Kourosh Fathabadi-->
 
 <body>
     <h1 id="folderName" dir="auto"></h1>
-    <div style="width: 99%; border: 5px solid black; margin: auto;">
+    <div style="width: 99%; max-height: 20vh; overflow-x: auto; border: 5px solid black; margin: auto;">
         <div id="control"></div>
         <input placeholder="کلمه ی جدید" id="newWord">
         <button onclick="newWord()">ثبت</button>
@@ -77,6 +71,7 @@ Made by Kourosh Fathabadi-->
     </div>
     <script>
         moneyG();
+        music();
         document.querySelectorAll("input").forEach(function (input) { input.dir = "auto" });
         let control = document.getElementById("control");
         let locationFolder = "/";
@@ -87,10 +82,17 @@ Made by Kourosh Fathabadi-->
             let contents = document.getElementById("contents");
             RLSSV();
             folders = localStorages.filter(folder => folder.startsWith("Word location:" + locationFolder) && folder.length > 17).map(folder => folder.slice(14 + locationFolder.length, -3)).filter(folder => folder.split("/").length < 3 && folder.length > 0);
-            if (locationFolder != "") {
+            if (locationFolder == "/کلمات پیش فرض/") {
+                document.body.querySelector("div").style.display = "none";
+                contents.innerHTML = `
+                <button onclick="openFolder('lastFolder')">پوشه ی قبلی</button>
+                <button onclick="window.location.href = 'main.html'">برگشت</button>
+                <br>
+                `;
+            } else {
                 localStorage.setItem(`Word location:${locationFolder} -g`, folderWords.join("\n"));
+                contents.innerHTML = "";
             }
-            contents.innerHTML = "";
             let counter = 0;
             while (counter < folderWords.length) {
                 let wordDiv = Object.assign(document.createElement("div"), {
@@ -137,14 +139,30 @@ Made by Kourosh Fathabadi-->
                     control.innerHTML = onclickEditControl;
                 };
                 folderDiv.ondblclick = function () {
-                    folderDiv.style.backgroundColor = "";
                     control.innerHTML = "";
                     openFolder(thisFolder);
                 };
                 contents.appendChild(folderDiv);
                 folderDiv.appendChild(Object.assign(document.createElement("img"), { src: "Folder.png" }));
-                folderDiv.appendChild(Object.assign(document.createElement("p"), { innerHTML: thisFolder }));
+                folderDiv.appendChild(Object.assign(document.createElement("p"), { innerHTML: thisFolder.slice(0, thisFolder.length - 1) }));
                 counter++;
+            }
+            if (locationFolder == "/") {
+                let folderKPF = Object.assign(document.createElement("div"), {
+                    className: "wordsAndFolders",
+                    dir: "auto"
+                });
+                folderKPF.onclick = function () {
+                    deselectAll();
+                    folderKPF.style.backgroundColor = "blue";
+                    control.innerHTML = "";
+                };
+                folderKPF.ondblclick = function () {
+                    openFolder("KPF");
+                };
+                folderKPF.appendChild(Object.assign(document.createElement("img"), { src: "FolderLock.png" }));
+                folderKPF.appendChild(Object.assign(document.createElement("p"), { innerHTML: "کلمات پیش فرض" }));
+                contents.appendChild(folderKPF);
             }
             if (contents.innerHTML == "") {
                 contents.innerHTML = "<p>خالی است!</p>"
@@ -198,17 +216,23 @@ Made by Kourosh Fathabadi-->
             }
         }
         function openFolder(folder) {
-            if (folder != "lastFolder") {
+            if (folder.includes("/")) {
                 locationFolder = locationFolder + folder;
-            } else {
+                folderWords = localStorage.getItem(`Word location:${locationFolder} -g`).split("\n").filter(word => word.length > 0);
+            } else if (folder == "lastFolder") {
                 let PFB = locationFolder.split("/");
                 locationFolder = PFB.slice(0, PFB.length - 2).join("/") + "/";
+                folderWords = localStorage.getItem(`Word location:${locationFolder} -g`).split("\n").filter(word => word.length > 0);
+                if (document.body.querySelector("div").style.display == "none") {
+                    document.body.querySelector("div").style.display = "block";
+                }
+            } else if (folder == "KPF") {
+                locationFolder = "/کلمات پیش فرض/";
+                folderWords = ["سلامت", "کوروش", "ناخدا", "چرا؟!", "وگرنه"];
             }
             if (locationFolder == "//") {
                 locationFolder = "/";
             }
-            folderWords = localStorage.getItem(`Word location:${locationFolder} -g`).split("\n").filter(word => word.length > 0);
-            folders = localStorages.filter(folder => folder.startsWith("Word location:" + locationFolder) && folder.length > 17).map(folder => folder.slice(14 + locationFolder.length, -3));
             view();
         }
         function renameFolder(LFN, folderName, SID) {
