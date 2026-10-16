@@ -62,7 +62,7 @@ Made by Kourosh Fathabadi-->
         <input placeholder="پوشه ی جدید" id="newfolder">
         <button onclick="newFolder()">ثبت</button>
         <button onclick="deselectAll(); document.getElementById('control').innerHTML = ''">در آوردن از انتخاب</button>
-        <button onclick="CRWTP()">بازی با انتخاب رندوم</button>
+        <button onclick="CRWTP()">انتخاب رندوم</button>
         <button onclick="openFolder('lastFolder')">پوشه ی قبلی</button>
         <button onclick="window.location.href = 'main.html'">برگشت</button>
     </div>
@@ -85,6 +85,7 @@ Made by Kourosh Fathabadi-->
             if (locationFolder == "/کلمات پیش فرض/") {
                 document.body.querySelector("div").style.display = "none";
                 contents.innerHTML = `
+                <button onclick="CRWTP()">انتخاب رندوم</button>
                 <button onclick="openFolder('lastFolder')">پوشه ی قبلی</button>
                 <button onclick="window.location.href = 'main.html'">برگشت</button>
                 <br>
@@ -155,7 +156,7 @@ Made by Kourosh Fathabadi-->
                 folderKPF.onclick = function () {
                     deselectAll();
                     folderKPF.style.backgroundColor = "blue";
-                    control.innerHTML = "";
+                    control.innerHTML = `<button onclick="deselectAll(); control.innerHTML = ''; openFolder('KPF')">باز کردن</button>`;
                 };
                 folderKPF.ondblclick = function () {
                     openFolder("KPF");
