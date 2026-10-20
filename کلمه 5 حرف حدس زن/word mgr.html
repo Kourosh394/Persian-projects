@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fa" dir="auto">
+<!--All rights reserved © 2026
+Made by Kourosh Fathabadi-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>مدیر کلمات داخلی</title>
+    <link rel="icon" href="icon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
+    <style>
+        body {
+            background-color: white;
+        }
+
+        img {
+            width: max-content;
+        }
+
+        div {
+            user-select: none;
+            border-radius: 20px;
+        }
+
+        div p {
+            margin: 0px;
+        }
+
+        .wordsAndFolders {
+            display: inline-block;
+            margin: 1%;
+            user-select: none;
+            border-radius: 0px;
+        }
+
+        .wordsAndFolders img {
+            width: auto;
+        }
+
+        .setName {
+            display: none;
+            position: fixed;
+            top: 1%;
+            right: 1%;
+        }
+
+        #contents {
+            width: 99%;
+            height: 50vh;
+            border: 5px solid black;
+            margin: auto;
+            overflow-x: auto;
+        }
+    </style>
+    <script src="kernel.js"></script>
+    <script>
+        checkLScacheG("WordMGR");
+    </script>
+</head>
+
+<body>
+    <h1 id="folderName" dir="auto"></h1>
+    <div style="width: 99%; max-height: 20vh; overflow-x: auto; border: 5px solid black; margin: auto;">
+        <div id="control"></div>
+        <input dir="auto" placeholder="کلمه ی جدید" id="newWord">
+        <button onclick="newWord()">ثبت</button>
+        <input dir="auto" placeholder="پوشه ی جدید" id="newfolder">
+        <button onclick="newFolder()">ثبت</button>
+        <button onclick="deselectAll(); document.getElementById('control').innerHTML = ''">در آوردن از انتخاب</button>
+        <button onclick="CRWTP()">انتخاب رندوم</button>
+        <button onclick="openFolder('lastFolder')">پوشه ی قبلی</button>
+        <button onclick="window.location.href = 'main.html'">برگشت</button>
+    </div>
+    <p id="alert" style="color: red; margin: 0.5%;"></p>
+    <div id="contents">
+    </div>
+    <script>
+        moneyG();
+        music();
+        const control = document.getElementById("control");
+        const alertp = document.getElementById("alert");
+        let locationFolder = "/";
+        let folderWords = localStorage.getItem(`Word location:${locationFolder} -g`).split("\n").filter(word => word.length > 0);
+        let folders;
+        view();
+        function view() {
+            let contents = document.getElementById("contents");
+            RLSSV();
+            folders = localStorages.filter(folder => folder.startsWith("Word location:" + locationFolder) && folder.length > 17).map(folder => folder.slice(14 + locationFolder.length, -3)).filter(folder => folder.split("/").length < 3 && folder.length > 0);
+            deselectAll();
+            control.innerHTML = "";
+            if (locationFolder == "/کلمات پیش فرض/") {
+                document.body.querySelector("div").style.display = "none";
+                contents.innerHTML = `
+                <button onclick="CRWTP()">انتخاب رندوم</button>
+                <button onclick="openFolder('lastFolder')">پوشه ی قبلی</button>
+                <button onclick="window.location.href = 'main.html'">برگشت</button>
+                <br>
+                `;
+            } else {
+                localStorage.setItem(`Word location:${locationFolder} -g`, folderWords.join("\n"));
+                contents.innerHTML = "";
+            }
+            let counter = 0;
+            while (counter < folderWords.length) {
+                let wordDiv = Object.assign(document.createElement("div"), {
+                    className: "wordsAndFolders",
+                    dir: "auto"
+                });
+                let thisWord = folderWords[counter];
+                let onclickEditControl = `
+                <button onclick="folderWords.splice(${counter}, 1); view()">حذف</button>
+                <input dir="auto" placeholder="ویرایش" id="editWord">
+                <button onclick="let word = document.getElementById('editWord').value; if (checkWord(word, 'editWord')) {folderWords[${counter}] = word; view()}">ثبت</button>
+                <button onclick="localStorage.setItem('cache-g', '${thisWord}'); window.location.href = 'game.html'">باز کردن</button>
+                `;
+                wordDiv.onclick = function () {
+                    deselectAll();
+                    wordDiv.style.backgroundColor = "lightblue";
+                    control.innerHTML = onclickEditControl;
+                };
+                wordDiv.ondblclick = function () {
+                    localStorage.setItem("cache-g", thisWord);
+                    window.location.href = "game.html";
+                };
+                contents.appendChild(wordDiv);
+                wordDiv.appendChild(Object.assign(document.createElement("img"), { src: "Word.png" }));
+                wordDiv.appendChild(Object.assign(document.createElement("p"), { innerHTML: thisWord }));
+                counter++;
+            }
+            counter = 0;
+            while (counter < folders.length) {
+                let folderDiv = Object.assign(document.createElement("div"), {
+                    className: "wordsAndFolders",
+                    dir: "auto"
+                });
+                let thisFolder = folders[counter].replaceAll("'", "\\'");
+                let onclickEditControl = `
+                <button onclick="localStorages.filter(LSF => LSF.startsWith('Word location:' + '${locationFolder + thisFolder}')).map(LSF => localStorage.removeItem(LSF)); view()">حذف</button>
+                <input dir="auto" placeholder="ویرایش" id="editFolderName">
+                <button onclick="renameFolder(document.getElementById('editFolderName').value, '${thisFolder}', 'editFolderName')">ثبت</button>
+                <button onclick="deselectAll(); control.innerHTML = ''; openFolder('${thisFolder}')">باز کردن</button>
+                `;
+                folderDiv.onclick = function () {
+                    deselectAll();
+                    folderDiv.style.backgroundColor = "lightblue";
+                    control.innerHTML = onclickEditControl;
+                };
+                folderDiv.ondblclick = function () {
+                    control.innerHTML = "";
+                    openFolder(thisFolder);
+                };
+                contents.appendChild(folderDiv);
+                folderDiv.appendChild(Object.assign(document.createElement("img"), { src: "Folder.png" }));
+                folderDiv.appendChild(Object.assign(document.createElement("p"), { innerHTML: thisFolder.slice(0, thisFolder.length - 1).replaceAll("\\'", "'") }));
+                counter++;
+            }
+            if (locationFolder == "/") {
+                let folderKPF = Object.assign(document.createElement("div"), {
+                    className: "wordsAndFolders",
+                    dir: "auto"
+                });
+                folderKPF.onclick = function () {
+                    deselectAll();
+                    folderKPF.style.backgroundColor = "lightblue";
+                    control.innerHTML = `<button onclick="deselectAll(); control.innerHTML = ''; openFolder('KPF')">باز کردن</button>`;
+                };
+                folderKPF.ondblclick = function () {
+                    openFolder("KPF");
+                };
+                folderKPF.appendChild(Object.assign(document.createElement("img"), { src: "FolderLock.png" }));
+                folderKPF.appendChild(Object.assign(document.createElement("p"), { innerHTML: "کلمات پیش فرض" }));
+                contents.appendChild(folderKPF);
+            }
+            if (contents.innerHTML == "") {
+                contents.innerHTML = "<p>خالی است!</p>"
+            }
+            document.getElementById("folderName").innerText = locationFolder;
+        }
+        function newWord() {
+            let word = document.getElementById("newWord").value;
+            if (checkWord(word, "newWord")) {
+                folderWords.push(document.getElementById("newWord").value);
+                view();
+            }
+        }
+        function newFolder() {
+            let folder = document.getElementById("newfolder").value;
+            if (checkFolderName(folder, "newfolder")) {
+                localStorage.setItem(`Word location:${locationFolder + folder}/ -g`, "");
+                view();
+            }
+        }
+        function checkWord(word, SID) {
+            if (word.length == 5 && word.includes("-") == false && folderWords.includes(word) == false) {
+                return true;
+            } else {
+                CWT(SID, "shake");
+                CWT("alert", "SBE");
+                if (word.length != 5) {
+                    alertp.innerText = "کلمه 5 حرفی نیست.";
+                } else if (word.includes("-")) {
+                    alertp.innerText = 'کلمه "-" دارد.';
+                }
+                return false;
+            }
+        }
+        function checkFolderName(folder, SID) {
+            if (folder.includes("/") == false && folders.includes(folder + "/") == false && folder.includes('"') == false && folder.length != 0 && locationFolder.includes(folder) == false) {
+                return true;
+            } else {
+                CWT(SID, "shake");
+                CWT("alert", "SBE");
+                if (folder.includes("/")) {
+                    alertp.innerText = 'پوشه "/" دارد.';
+                } else if (folders.includes(folder + "/")) {
+                    alertp.innerText = "پوشه اینجا با این نام هست.";
+                } else if (folder.includes('"')) {
+                    alertp.innerText = 'پوشه " دارد.';
+                } else if (folder.length == 0) {
+                    alertp.innerText = "نام خالی است!";
+                } else {
+                    alertp.innerText = "نباید نام پوشه در زیر پوشه باشد.";
+                }
+                return false;
+            }
+        }
+        function openFolder(folder) {
+            if (folder.includes("/")) {
+                locationFolder = locationFolder + folder;
+                folderWords = localStorage.getItem(`Word location:${locationFolder} -g`).split("\n").filter(word => word.length > 0);
+            } else if (folder == "lastFolder") {
+                let PFB = locationFolder.split("/");
+                locationFolder = PFB.slice(0, PFB.length - 2).join("/") + "/";
+                folderWords = localStorage.getItem(`Word location:${locationFolder} -g`).split("\n").filter(word => word.length > 0);
+                if (document.body.querySelector("div").style.display == "none") {
+                    document.body.querySelector("div").style.display = "block";
+                }
+            } else if (folder == "KPF") {
+                locationFolder = "/کلمات پیش فرض/";
+                folderWords = ["سلامت", "کوروش", "ناخدا", "مرجان", "وگرنه", "لوستر", "مهتاب", "کوییک", "پرواز", "پیشرو", "نیسان"];
+            }
+            if (locationFolder == "//") {
+                locationFolder = "/";
+            }
+            view();
+        }
+        function renameFolder(NFN, folderName, SID) {
+            if (checkFolderName(NFN, SID)) {
+                const CNF = localStorages.filter(LSF => LSF.startsWith("Word location:" + locationFolder + folderName));
+                let counter = 0;
+                while (counter < CNF.length) {
+                    const FNFE = CNF[counter];
+                    localStorage.setItem(`Word location:${locationFolder + NFN}/${FNFE.split(folderName).pop()}`, localStorage.getItem(FNFE));
+                    localStorage.removeItem(FNFE);
+                    counter++;
+                }
+                view();
+            }
+        }
+        function deselectAll() {
+            document.querySelectorAll(".wordsAndFolders").forEach(function (wordOrFolder) {
+                wordOrFolder.style.backgroundColor = "";
+            });
+        }
+        function CRWTP() {
+            let wordsNumber = folderWords.length;
+            if (wordsNumber >= 2) {
+                localStorage.setItem('cache-g', folderWords[random(wordsNumber - 1)]);
+                window.location.href = "game.html";
+            } else {
+                CWT("alertp", "SBE");
+                document.getElementById("alertp").innerText = "در بازی باید بیشتر از 2 کلمه باشد تا شما بازی با انتخاب رندوم کنید.";
+            }
+        }
+        document.addEventListener("keydown", function (keydeselect) {
+            let keydowned = keydeselect.key;
+            if (keydowned == "d" || keydowned == "D" || keydowned == "ی") {
+                deselectAll();
+                control.innerHTML = "";
+            }
+        });
+    </script>
+</body>
+
+</html>
