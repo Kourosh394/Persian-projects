@@ -265,12 +265,12 @@ Made by Kourosh Fathabadi-->
             });
         }
         function CRWTP() {
-            let wordsNumber = folderWords.length;
+            const wordsNumber = folderWords.length;
             if (wordsNumber >= 2) {
                 localStorage.setItem('cache-g', folderWords[random(wordsNumber - 1)]);
                 window.location.href = "game.html";
             } else {
-                CWT("alertp", "SBE");
+                CWT("alert", "SBE");
                 document.getElementById("alertp").innerText = "در بازی باید بیشتر از 2 کلمه باشد تا شما بازی با انتخاب رندوم کنید.";
             }
         }
