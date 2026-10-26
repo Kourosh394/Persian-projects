@@ -38,6 +38,7 @@ input {
 input[type="checkbox"] {
   height: 20px;
   margin: -30px;
+  transform: translateY(25%);
 }
 
 input[type="file"] {
@@ -81,8 +82,8 @@ textarea {
 }
 
 .codeWriter {
-  height: 300px;
-  width: 1000px;
+  height: 30vh;
+  width: 98%;
   font-family: monospace;
   direction: ltr;
   color: white;
