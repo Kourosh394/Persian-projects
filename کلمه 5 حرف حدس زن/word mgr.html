@@ -90,17 +90,9 @@ Made by Kourosh Fathabadi-->
             folders = localStorages.filter(folder => folder.startsWith("Word location:" + locationFolder) && folder.length > 17).map(folder => folder.slice(14 + locationFolder.length, -3)).filter(folder => folder.split("/").length < 3 && folder.length > 0);
             deselectAll();
             control.innerHTML = "";
-            if (locationFolder == "/کلمات پیش فرض/") {
-                document.body.querySelector("div").style.display = "none";
-                contents.innerHTML = `
-                <button onclick="CRWTP()">انتخاب رندوم</button>
-                <button onclick="openFolder('lastFolder')">پوشه ی قبلی</button>
-                <button onclick="window.location.href = 'main.html'">برگشت</button>
-                <br>
-                `;
-            } else {
+            contents.innerHTML = "";
+            if (locationFolder != "/کلمات پیش فرض/") {
                 localStorage.setItem(`Word location:${locationFolder} -g`, folderWords.join("\n"));
-                contents.innerHTML = "";
             }
             let counter = 0;
             while (counter < folderWords.length) {
@@ -118,6 +110,9 @@ Made by Kourosh Fathabadi-->
                 wordDiv.onclick = function () {
                     deselectAll();
                     wordDiv.style.backgroundColor = "lightblue";
+                    if (locationFolder == "/کلمات پیش فرض/") {
+                        onclickEditControl = `<button onclick="localStorage.setItem('cache-g', '${thisWord}'); window.location.href = 'game.html'">باز کردن</button>`;
+                    }
                     control.innerHTML = onclickEditControl;
                 };
                 wordDiv.ondblclick = function () {
@@ -193,7 +188,7 @@ Made by Kourosh Fathabadi-->
             }
         }
         function checkWord(word, SID) {
-            if (word.length == 5 && word.includes("-") == false && folderWords.includes(word) == false) {
+            if (word.length == 5 && word.includes("-") == false && folderWords.includes(word) == false && locationFolder != "/کلمات پیش فرض/") {
                 return true;
             } else {
                 CWT(SID, "shake");
@@ -202,12 +197,16 @@ Made by Kourosh Fathabadi-->
                     alertp.innerText = "کلمه 5 حرفی نیست.";
                 } else if (word.includes("-")) {
                     alertp.innerText = 'کلمه "-" دارد.';
+                } else if (folderWords.includes(word)) {
+                    alertp.innerText = "کلمه اینجا با این نام هست.";
+                } else {
+                    alertp.innerText = "پوشه قفل است.";
                 }
                 return false;
             }
         }
         function checkFolderName(folder, SID) {
-            if (folder.includes("/") == false && folders.includes(folder + "/") == false && folder.includes('"') == false && folder.length != 0 && locationFolder.includes(folder) == false) {
+            if (folder.includes("/") == false && folders.includes(folder + "/") == false && folder.includes('"') == false && folder.length != 0 && localStorages.filter(folderName => folderName.startsWith("Word location:" + locationFolder)).join("/").includes(folder) == false && locationFolder != "/کلمات پیش فرض/") {
                 return true;
             } else {
                 CWT(SID, "shake");
@@ -220,8 +219,10 @@ Made by Kourosh Fathabadi-->
                     alertp.innerText = 'پوشه " دارد.';
                 } else if (folder.length == 0) {
                     alertp.innerText = "نام خالی است!";
-                } else {
+                } else if (localStorages.filter(folderName => folderName.startsWith("Word location:" + locationFolder)).join("/").includes(folder)) {
                     alertp.innerText = "نباید نام پوشه در زیر پوشه باشد.";
+                } else {
+                    alertp.innerText = "پوشه قفل است.";
                 }
                 return false;
             }
@@ -234,9 +235,6 @@ Made by Kourosh Fathabadi-->
                 let PFB = locationFolder.split("/");
                 locationFolder = PFB.slice(0, PFB.length - 2).join("/") + "/";
                 folderWords = localStorage.getItem(`Word location:${locationFolder} -g`).split("\n").filter(word => word.length > 0);
-                if (document.body.querySelector("div").style.display == "none") {
-                    document.body.querySelector("div").style.display = "block";
-                }
             } else if (folder == "KPF") {
                 locationFolder = "/کلمات پیش فرض/";
                 folderWords = ["سلامت", "کوروش", "ناخدا", "مرجان", "وگرنه", "لوستر", "مهتاب", "کوییک", "پرواز", "پیشرو", "نیسان"];

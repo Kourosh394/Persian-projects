@@ -96,27 +96,28 @@ function CWT(id, classFE, time = 1000) {
         document.getElementById(id).classList.remove(classFE);
     }, time);
 }
+async function giveTextFile(element = document.body.appendChild(Object.assign(document.createElement("input"), { type: "file", accept: ".js" }))) {
+    element.click();
+    return new Promise(function (returnText) {
+        element.addEventListener("change", async function () {
+            const codeJS = await element.files[0].text();
+            if (codeJS == "") {
+                returnText(null);
+            } else {
+                returnText(codeJS);
+            }
+        });
+    }, { once: true });
+}
 async function getRestorePoint(doWorkWith) {
-    let restorePointInput = document.createElement("input");
-    restorePointInput.type = "file";
-    restorePointInput.accept = ".js";
-    restorePointInput.style.display = "none";
-    restorePointInput.click();
-    restorePointInput.addEventListener("change", async function () {
-        if (doWorkWith == "DADAT") {
-            await deleteAllData();
-        }
-        let codeJS = restorePointInput.files[0];
-        if (doWorkWith == "OGT") {
-            return codeJS.text();
-        }
-        if (codeJS != false) {
-            let JS = document.createElement("script");
-            JS.src = URL.createObjectURL(codeJS);
-            document.body.appendChild(JS);
-            window.location.href = "main.html";
-        }
-    });
+    let codeJS = await giveTextFile();
+    if (doWorkWith == "DADAT") {
+        codeJS = "deleteAllData()\n" + codeJS;
+    }
+    if (codeJS != null) {
+        document.body.appendChild(Object.assign(document.createElement("script"), { innerHTML: codeJS }));
+        window.location.href = "main.html";
+    }
 }
 function createRestorePoint() {
     let downloadRP = document.createElement("a");

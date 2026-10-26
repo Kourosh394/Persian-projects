@@ -35,6 +35,20 @@ input {
   font-size: 20px;
 }
 
+input[type="checkbox"] {
+  height: 20px;
+  margin: -30px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+textarea {
+  resize: none;
+  font-size: 20px;
+}
+
 #money {
   position: fixed;
   top: 0px;
@@ -63,6 +77,15 @@ input {
   margin: 20px auto;
   height: 2.5px;
   width: 80%;
+  background-color: black;
+}
+
+.codeWriter {
+  height: 300px;
+  width: 1000px;
+  font-family: monospace;
+  direction: ltr;
+  color: white;
   background-color: black;
 }
 

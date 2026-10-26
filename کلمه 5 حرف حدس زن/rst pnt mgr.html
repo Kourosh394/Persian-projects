@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fa" dir="auto">
+
+<head>
+    <meta charset="UTF-8">
+    <title>بارگذاری نقطه ی بازیابی (پیشرفته)</title>
+    <link rel="icon" href="icon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
+    <script src="kernel.js"></script>
+    <script>
+        checkLScacheG("restorePointManager");
+    </script>
+</head>
+
+<body>
+    <h1>بارگذاری نقطه ی بازیابی (پیشرفته)</h1>
+    <input type="file" accept=".js" id="opener">
+    <textarea id="restorePointCode" class="codeWriter"></textarea>
+    <br>
+    <p style="display: inline;">پاک کردن داده های قبلی:</p>
+    <input id="deleteAllData" type="checkbox">
+    <button onclick="openRP()" class="BM">باز کردن js</button>
+    <button onclick="localStorage.setItem('cache-g', 'controlPanel'); window.location.href = 'control.html'"
+        class="BM">برگشت</button>
+    <button onclick="loadRestorePoint()" class="BM">تمام</button>
+    <script>
+        moneyG();
+        music();
+        document.getElementById("deleteAllData").click();
+        async function openRP() {
+            const codeJS = await giveTextFile(document.getElementById("opener"));
+            if (codeJS != null) {
+                document.getElementById("restorePointCode").value = codeJS;
+            }
+        }
+        function loadRestorePoint() {
+            let addOn = "";
+            if (document.getElementById("deleteAllData").checked == true) {
+                addOn = "deleteAllData();\n";
+            }
+            if (document.body.querySelector(".restorePoint") != null) {
+                document.body.querySelector(".restorePoint").remove();
+            }
+            if (document.getElementById("restorePointCode").value != "") {
+                document.body.appendChild(Object.assign(document.createElement("script"), { className: "restorePoint", innerHTML: addOn + document.getElementById("restorePointCode").value }));
+                window.location.href = "main.html";
+            }
+        }
+    </script>
+</body>
+
+</html>

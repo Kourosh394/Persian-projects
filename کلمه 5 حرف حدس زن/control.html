@@ -22,13 +22,14 @@ Made by Kourosh Fathabadi-->
     <p id="alertMusic"></p>
     <p style="color: red;" id="noneMusicS">نکنه: به دلیل محدودیت های امنیتی مرورگر آهنگ به صورت خودکار پخش نمی شود به
         خاطر همین یه علامت 🎵 گوشه ی چپ بالای هر صفحه میاید و برای پخش آن را بزنید و مسیر آهنگ اینترنتی را بنویسید.</p>
-    <button onclick="getRestorePoint('DADAT');">انتخاب کردن</button>
+    <button onclick="OKMB()">انتخاب کردن</button>
     <button onclick="music('deleteDataes')">پاک کردن</button>
     <div class="line"></div>
     <h1>نقطه ی بازیابی</h1>
-    <p style="color: red;">نکته: فایل JS جای دیکر را نیاورید.</p>
-    <button onclick="setRP()" class="BM">بارگذاری نقطه ی بازیابی</button>
+    <p style="color: red;">نکته: فایل JS آلوده یا ویروسی یا را نیاورید. این کار حتی شاید منجر به هک شدن میشود.</p>
     <button onclick="createRestorePoint()" class="BM">دانلود نقطه ی بازیابی</button>
+    <button onclick="getRestorePoint('DADAT')" class="BM">بارگذاری نقطه ی بازیابی</button>
+    <button onclick="localStorage.setItem('cache-g', 'restorePointManager'); window.location.href = 'rst pnt mgr.html'" class="BM">بارگذاری نقطه ی بازیابی (پیشرفته)</button>
     <div class="line"></div>
     <button onclick="window.location.reload()" class="BM">بار کردن مجدد صفحه</button>
     <button onclick="downloadLV()" id="BD" class="BM">دانلود نسخه ی لوکال</button>
