@@ -96,7 +96,25 @@ function CWT(id, classFE, time = 1000) {
         document.getElementById(id).classList.remove(classFE);
     }, time);
 }
-async function giveTextFile(element = document.body.appendChild(Object.assign(document.createElement("input"), { type: "file", accept: ".js" }))) {
+function hold(element, functionHold) {
+    element.addEventListener("pointerdown", function () {
+        let HI;
+        const HTO = setTimeout(function () {
+            HI = setInterval(functionHold, 100);
+        }, 750);
+        element.addEventListener("pointerup", CELATO);
+        element.addEventListener("pointercancel", CELATO);
+        function CELATO() {
+            clearTimeout(HTO);
+            if (HI != undefined) {
+                clearInterval(HI);
+            }
+            element.removeEventListener("pointerup", CELATO);
+            element.removeEventListener("pointercancel", CELATO);
+        }
+    });
+}
+function giveTextFile(element = document.body.appendChild(Object.assign(document.createElement("input"), { type: "file", accept: ".js" }))) {
     element.click();
     return new Promise(function (returnText) {
         element.addEventListener("change", async function () {

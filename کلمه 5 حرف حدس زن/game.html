@@ -81,6 +81,11 @@ Made by Kourosh Fathabadi-->
     <script>
         moneyG();
         music();
+        document.body.querySelectorAll("button").forEach(function (buttons) {
+            if (buttons.innerText == "↓" || buttons.innerText == "↑") {
+                hold(buttons, function () { buttons.click() });
+            }
+        });
         let moneyWin = 0;
         let jone = 15;
         let l1 = "-";

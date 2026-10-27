@@ -119,6 +119,10 @@ Made by Kourosh Fathabadi-->
                     localStorage.setItem("cache-g", thisWord);
                     window.location.href = "game.html";
                 };
+                hold(wordDiv, function () {
+                    localStorage.setItem("cache-g", thisWord);
+                    window.location.href = "game.html";
+                });
                 contents.appendChild(wordDiv);
                 wordDiv.appendChild(Object.assign(document.createElement("img"), { src: "Word.png" }));
                 wordDiv.appendChild(Object.assign(document.createElement("p"), { innerHTML: thisWord }));
@@ -146,6 +150,10 @@ Made by Kourosh Fathabadi-->
                     control.innerHTML = "";
                     openFolder(thisFolder);
                 };
+                hold(folderDiv, function () {
+                    control.innerHTML = "";
+                    openFolder(thisFolder);
+                });
                 contents.appendChild(folderDiv);
                 folderDiv.appendChild(Object.assign(document.createElement("img"), { src: "Folder.png" }));
                 folderDiv.appendChild(Object.assign(document.createElement("p"), { innerHTML: thisFolder.slice(0, thisFolder.length - 1).replaceAll("\\'", "'") }));
@@ -164,6 +172,9 @@ Made by Kourosh Fathabadi-->
                 folderKPF.ondblclick = function () {
                     openFolder("KPF");
                 };
+                hold(folderKPF, function () {
+                    openFolder("KPF");
+                });
                 folderKPF.appendChild(Object.assign(document.createElement("img"), { src: "FolderLock.png" }));
                 folderKPF.appendChild(Object.assign(document.createElement("p"), { innerHTML: "کلمات پیش فرض" }));
                 contents.appendChild(folderKPF);
