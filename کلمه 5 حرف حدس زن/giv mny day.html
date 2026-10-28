@@ -16,8 +16,8 @@ Made by Kourosh Fathabadi-->
 </head>
 
 <body>
-    
-    
+
+
     <h1 id="giveMoney"></h1>
     <script>
         moneyG();
@@ -29,8 +29,10 @@ Made by Kourosh Fathabadi-->
             if (counter >= 10) {
                 money = money + giveMoney;
                 moneyG();
-                window.location.href = "main.html";
-                clearInterval(chooseMoney);
+                setTimeout(function () {
+                    window.location.href = "main.html";
+                    clearInterval(chooseMoney);
+                }, 1000);
             }
             counter++;
         }, 250);

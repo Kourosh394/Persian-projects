@@ -27,7 +27,7 @@ if (window.location.protocol == "file:") {
     fileVersion = true;
 }
 if (window.location.hostname != "kourosh394.github.io" && fileVersion == false) {
-    alert(`این بازی تقلبی کلمه 5 حرف حدس زن است. لینک تقلبی: ${decodeURIComponent(window.location.href)} لینک اصلی: https://kourosh394.github.io/HTMLCFF/faprgs/کلمه 5 حرف حدس زن/main.html OK را بزنید تا به نسخه ی اصلی بروید.`);
+    alert(`این بازی تقلبی کلمه 5 حرف حدس زن است. لینک تقلبی: ${decodeURIComponent(window.location.href)} لینک اصلی: https://kourosh394.github.io/Persian-projects/کلمه 5 حرف حدس زن/main.html OK را بزنید تا به نسخه ی اصلی بروید.`);
     window.location.href = "https://kourosh394.github.io/Persian-projects/کلمه 5 حرف حدس زن/main.html";
 }
 function checkLScacheG(LSValue) {
@@ -44,7 +44,7 @@ function moneyG() {
     localStorage.setItem("money-g", money);
 }
 function music(deleteDataes) {
-    let musicLocation = localStorage.getItem("playMusicLocation-g");
+    let musicLocation = localStorage.getItem("musicLocation-g");
     if (musicLocation != null && musicLocation.slice(-4) == ".mp3") {
         let audio = document.createElement("audio");
         audio.src = musicLocation;
@@ -93,15 +93,22 @@ function random(max = 0, min = 0) {
 function CWT(id, classFE, time = 1000) {
     document.getElementById(id).classList.add(classFE);
     setTimeout(function () {
-        document.getElementById(id).classList.remove(classFE);
+        if (document.getElementById(id) != null) {
+            document.getElementById(id).classList.remove(classFE);
+        }
     }, time);
 }
-function hold(element, functionHold) {
+function hold(element, functionHold, repeat) {
     element.addEventListener("pointerdown", function () {
         let HI;
-        const HTO = setTimeout(function () {
-            HI = setInterval(functionHold, 100);
-        }, 750);
+        let HTO;
+        if (repeat) {
+            HTO = setTimeout(function () {
+                HI = setInterval(functionHold, 100);
+            }, 750);
+        } else {
+            HTO = setTimeout(functionHold, 750);
+        }
         element.addEventListener("pointerup", CELATO);
         element.addEventListener("pointercancel", CELATO);
         function CELATO() {

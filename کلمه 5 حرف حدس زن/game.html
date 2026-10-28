@@ -83,7 +83,7 @@ Made by Kourosh Fathabadi-->
         music();
         document.body.querySelectorAll("button").forEach(function (buttons) {
             if (buttons.innerText == "↓" || buttons.innerText == "↑") {
-                hold(buttons, function () { buttons.click() });
+                hold(buttons, function () { buttons.click() }, true);
             }
         });
         let moneyWin = 0;
@@ -103,7 +103,7 @@ Made by Kourosh Fathabadi-->
         let markLetter = markLetters[markNumber];
         let number = 0;
         localStorage.removeItem("cache-g");
-        async function WALShow() {
+        function WALShow() {
             thinkWord = `${l1}${l2}${l3}${l4}${l5}`;
             document.getElementById("word").innerText = thinkWord;
             document.getElementById("engLetter").innerText = engLetter;
@@ -129,7 +129,7 @@ Made by Kourosh Fathabadi-->
                     moneyG();
                 }
                 document.body.innerHTML = `<h1 style="color: red;" class="SBE"> شما باختید. کلمه: ${word}</h1>`;
-                await setTimeout(function () {
+                setTimeout(function () {
                     window.location.href = 'main.html';
                 }, 1000);
             }
@@ -226,13 +226,15 @@ Made by Kourosh Fathabadi-->
             WALShow();
         }
         function joneCam() {
-            jone--;
             if (jone != 0) {
+                jone--;
                 document.getElementById("jone").style.color = "red";
                 CWT("word", "SBE");
                 CWT("jone", "shake");
                 setTimeout(function () {
-                    document.getElementById("jone").style.color = "black";
+                    if (document.getElementById("jone") != null) {
+                        document.getElementById("jone").style.color = "black";
+                    }
                 }, 1000);
             }
         }
