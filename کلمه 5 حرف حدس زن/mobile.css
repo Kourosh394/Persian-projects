@@ -18,6 +18,7 @@ button:active {
 
 img {
   height: 250px;
+  width: auto;
 }
 
 input {

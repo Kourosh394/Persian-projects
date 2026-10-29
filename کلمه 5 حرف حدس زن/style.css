@@ -26,6 +26,7 @@ button:hover {
 
 img {
   height: 100px;
+  width: auto;
 }
 
 input {
