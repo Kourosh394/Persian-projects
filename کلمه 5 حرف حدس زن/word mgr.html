@@ -30,7 +30,6 @@ Made by Kourosh Fathabadi-->
         .wordsAndFolders {
             display: inline-block;
             margin: 1%;
-            user-select: none;
             border-radius: 0px;
         }
 
@@ -49,6 +48,7 @@ Made by Kourosh Fathabadi-->
             width: 99%;
             height: 50vh;
             border: 5px solid black;
+            user-select: none;
             margin: auto;
             overflow-x: auto;
         }
@@ -81,18 +81,20 @@ Made by Kourosh Fathabadi-->
         const control = document.getElementById("control");
         const alertp = document.getElementById("alert");
         let locationFolder = "/";
-        let folderWords = localStorage.getItem(`Word location:${locationFolder} -g`).split("\n").filter(word => word.length > 0);
+        let folderWords;
         let folders;
         view();
         function view() {
-            let contents = document.getElementById("contents");
+            const contents = document.getElementById("contents");
             RLSSV();
             folders = localStorages.filter(folder => folder.startsWith("Word location:" + locationFolder) && folder.length > 17).map(folder => folder.slice(14 + locationFolder.length, -3)).filter(folder => folder.split("/").length < 3 && folder.length > 0);
             deselectAll();
             control.innerHTML = "";
             contents.innerHTML = "";
             if (locationFolder != "/کلمات پیش فرض/") {
-                localStorage.setItem(`Word location:${locationFolder} -g`, folderWords.join("\n"));
+                folderWords = localStorage.getItem(`Word location:${locationFolder} -g`).split("\n").filter(word => word.length > 0).sort();
+            } else {
+                folderWords = ["سلامت", "لوستر", "مرجان", "مهتاب", "ناخدا", "نیسان", "وگرنه", "پرواز", "پیشرو", "کوروش", "کوییک"];
             }
             let counter = 0;
             while (counter < folderWords.length) {
@@ -188,6 +190,7 @@ Made by Kourosh Fathabadi-->
             let word = document.getElementById("newWord").value;
             if (checkWord(word, "newWord")) {
                 folderWords.push(document.getElementById("newWord").value);
+                localStorage.setItem(`Word location:${locationFolder} -g`, folderWords.join("\n"));
                 view();
             }
         }
@@ -200,6 +203,7 @@ Made by Kourosh Fathabadi-->
         }
         function checkWord(word, SID) {
             if (word.length == 5 && word.includes("-") == false && folderWords.includes(word) == false && locationFolder != "/کلمات پیش فرض/") {
+                alertp.innerText = "";
                 return true;
             } else {
                 CWT(SID, "shake");
@@ -217,7 +221,8 @@ Made by Kourosh Fathabadi-->
             }
         }
         function checkFolderName(folder, SID) {
-            if (folder.includes("/") == false && folders.includes(folder + "/") == false && folder.includes('"') == false && folder.length != 0 && localStorages.filter(folderName => folderName.startsWith("Word location:" + locationFolder)).join("/").includes(folder) == false && locationFolder != "/کلمات پیش فرض/") {
+            if (folder.includes("/") == false && folders.includes(folder + "/") == false && folder.includes('"') == false && folder.length != 0 && localStorages.filter(folderName => folderName.startsWith("Word location:" + locationFolder)).join("/").replaceAll("Word location:", "").replaceAll(" -g", "").includes(folder) == false && locationFolder != "/کلمات پیش فرض/") {
+                alertp.innerText = "";
                 return true;
             } else {
                 CWT(SID, "shake");
@@ -230,7 +235,7 @@ Made by Kourosh Fathabadi-->
                     alertp.innerText = 'پوشه " دارد.';
                 } else if (folder.length == 0) {
                     alertp.innerText = "نام خالی است!";
-                } else if (localStorages.filter(folderName => folderName.startsWith("Word location:" + locationFolder)).join("/").includes(folder)) {
+                } else if (localStorages.filter(folderName => folderName.startsWith("Word location:" + locationFolder)).join("/").replaceAll("Word location:", "").replaceAll(" -g", "").includes(folder)) {
                     alertp.innerText = "نباید نام پوشه در زیر پوشه باشد.";
                 } else {
                     alertp.innerText = "پوشه قفل است.";
@@ -241,14 +246,11 @@ Made by Kourosh Fathabadi-->
         function openFolder(folder) {
             if (folder.includes("/")) {
                 locationFolder = locationFolder + folder;
-                folderWords = localStorage.getItem(`Word location:${locationFolder} -g`).split("\n").filter(word => word.length > 0);
             } else if (folder == "lastFolder") {
-                let PFB = locationFolder.split("/");
+                const PFB = locationFolder.split("/");
                 locationFolder = PFB.slice(0, PFB.length - 2).join("/") + "/";
-                folderWords = localStorage.getItem(`Word location:${locationFolder} -g`).split("\n").filter(word => word.length > 0);
             } else if (folder == "KPF") {
                 locationFolder = "/کلمات پیش فرض/";
-                folderWords = ["سلامت", "کوروش", "ناخدا", "مرجان", "وگرنه", "لوستر", "مهتاب", "کوییک", "پرواز", "پیشرو", "نیسان"];
             }
             if (locationFolder == "//") {
                 locationFolder = "/";

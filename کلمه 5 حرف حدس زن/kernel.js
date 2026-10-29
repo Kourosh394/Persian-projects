@@ -2,7 +2,7 @@
 Made by Kourosh Fathabadi*/
 let money = Number(localStorage.getItem("money-g"));
 let fileVersion = false;
-let localStorages = Object.keys(localStorage).filter(LSFG => LSFG.endsWith("-g"));
+let localStorages = Object.keys(localStorage).filter(LSFG => LSFG.endsWith("-g")).sort();
 let downloadLink = "https://kourosh394.github.io/Persian-projects/کلمه%205%20حرف%20حدس%20زن/کلمه%205%20حرف%20حدس%20زن.zip";
 window.addEventListener("error", function (bug) {
     alert(`error: ${bug.error}.`);
@@ -76,7 +76,7 @@ function music(deleteDataes) {
     }
 }
 function RLSSV() {
-    localStorages = Object.keys(localStorage).filter(LSFG => LSFG.endsWith("-g"));
+    localStorages = Object.keys(localStorage).filter(LSFG => LSFG.endsWith("-g")).sort();
 }
 function random(max = 0, min = 0) {
     if (max <= min) {
