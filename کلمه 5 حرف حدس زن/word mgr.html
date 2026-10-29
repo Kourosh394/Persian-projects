@@ -6,14 +6,10 @@ Made by Kourosh Fathabadi-->
 <head>
     <meta charset="UTF-8">
     <title>مدیر کلمات داخلی</title>
-    <link rel="icon" href="icon.png">
+    <link rel="icon" href="html icons/word mgr.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
     <style>
-        body {
-            background-color: white;
-        }
-
         img {
             width: max-content;
         }
@@ -29,12 +25,8 @@ Made by Kourosh Fathabadi-->
 
         .wordsAndFolders {
             display: inline-block;
-            margin: 1%;
             border-radius: 0px;
-        }
-
-        .wordsAndFolders img {
-            width: auto;
+            margin: 1%;
         }
 
         .setName {
@@ -61,6 +53,7 @@ Made by Kourosh Fathabadi-->
 
 <body>
     <h1 id="folderName" dir="auto"></h1>
+    <img src="html icons/word mgr.png" style="position: fixed; top: 1%; left: 1%;">
     <div style="width: 99%; max-height: 20vh; overflow-x: auto; border: 5px solid black; margin: auto;">
         <div id="control"></div>
         <input dir="auto" placeholder="کلمه ی جدید" id="newWord">
@@ -104,14 +97,14 @@ Made by Kourosh Fathabadi-->
                 });
                 let thisWord = folderWords[counter];
                 let onclickEditControl = `
-                <button onclick="folderWords.splice(${counter}, 1); view()">حذف</button>
+                <button onclick="folderWords.splice(${counter}, 1); saveWords()">حذف</button>
                 <input dir="auto" placeholder="ویرایش" id="editWord">
                 <button onclick="let word = document.getElementById('editWord').value; if (checkWord(word, 'editWord')) {folderWords[${counter}] = word; view()}">ثبت</button>
                 <button onclick="localStorage.setItem('cache-g', '${thisWord}'); window.location.href = 'game.html'">باز کردن</button>
                 `;
                 wordDiv.onclick = function () {
                     deselectAll();
-                    wordDiv.style.backgroundColor = "lightblue";
+                    wordDiv.style.backgroundColor = "rgb(100, 100, 255)";
                     if (locationFolder == "/کلمات پیش فرض/") {
                         onclickEditControl = `<button onclick="localStorage.setItem('cache-g', '${thisWord}'); window.location.href = 'game.html'">باز کردن</button>`;
                     }
@@ -126,7 +119,7 @@ Made by Kourosh Fathabadi-->
                     window.location.href = "game.html";
                 });
                 contents.appendChild(wordDiv);
-                wordDiv.appendChild(Object.assign(document.createElement("img"), { src: "Word.png" }));
+                wordDiv.appendChild(Object.assign(document.createElement("img"), { src: "word mgr/word.png" }));
                 wordDiv.appendChild(Object.assign(document.createElement("p"), { innerHTML: thisWord }));
                 counter++;
             }
@@ -145,7 +138,7 @@ Made by Kourosh Fathabadi-->
                 `;
                 folderDiv.onclick = function () {
                     deselectAll();
-                    folderDiv.style.backgroundColor = "lightblue";
+                    folderDiv.style.backgroundColor = "rgb(100, 100, 255)";
                     control.innerHTML = onclickEditControl;
                 };
                 folderDiv.ondblclick = function () {
@@ -157,7 +150,11 @@ Made by Kourosh Fathabadi-->
                     openFolder(thisFolder);
                 });
                 contents.appendChild(folderDiv);
-                folderDiv.appendChild(Object.assign(document.createElement("img"), { src: "Folder.png" }));
+                if (localStorage.getItem(`Word location:${locationFolder + thisFolder} -g`) != "") {
+                    folderDiv.appendChild(Object.assign(document.createElement("img"), { src: "word mgr/full folder.png" }));
+                } else {
+                    folderDiv.appendChild(Object.assign(document.createElement("img"), { src: "word mgr/empty folder.png" }));
+                }
                 folderDiv.appendChild(Object.assign(document.createElement("p"), { innerHTML: thisFolder.slice(0, thisFolder.length - 1).replaceAll("\\'", "'") }));
                 counter++;
             }
@@ -168,7 +165,7 @@ Made by Kourosh Fathabadi-->
                 });
                 folderKPF.onclick = function () {
                     deselectAll();
-                    folderKPF.style.backgroundColor = "lightblue";
+                    folderKPF.style.backgroundColor = "rgb(100, 100, 255)";
                     control.innerHTML = `<button onclick="deselectAll(); control.innerHTML = ''; openFolder('KPF')">باز کردن</button>`;
                 };
                 folderKPF.ondblclick = function () {
@@ -177,7 +174,7 @@ Made by Kourosh Fathabadi-->
                 hold(folderKPF, function () {
                     openFolder("KPF");
                 });
-                folderKPF.appendChild(Object.assign(document.createElement("img"), { src: "FolderLock.png" }));
+                folderKPF.appendChild(Object.assign(document.createElement("img"), { src: "word mgr/lock folder.png" }));
                 folderKPF.appendChild(Object.assign(document.createElement("p"), { innerHTML: "کلمات پیش فرض" }));
                 contents.appendChild(folderKPF);
             }
@@ -186,11 +183,15 @@ Made by Kourosh Fathabadi-->
             }
             document.getElementById("folderName").innerText = locationFolder;
         }
+        function saveWords() {
+            localStorage.setItem(`Word location:${locationFolder} -g`, folderWords.join("\n"));
+            view();
+        }
         function newWord() {
             let word = document.getElementById("newWord").value;
             if (checkWord(word, "newWord")) {
                 folderWords.push(document.getElementById("newWord").value);
-                localStorage.setItem(`Word location:${locationFolder} -g`, folderWords.join("\n"));
+                saveWords();
                 view();
             }
         }
@@ -198,7 +199,6 @@ Made by Kourosh Fathabadi-->
             let folder = document.getElementById("newfolder").value;
             if (checkFolderName(folder, "newfolder")) {
                 localStorage.setItem(`Word location:${locationFolder + folder}/ -g`, "");
-                view();
             }
         }
         function checkWord(word, SID) {
