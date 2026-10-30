@@ -56,6 +56,7 @@ Made by Kourosh Fathabadi-->
         <button onclick="newWord()">ثبت</button>
         <input dir="auto" placeholder="پوشه ی جدید" id="newfolder">
         <button onclick="newFolder()">ثبت</button>
+        <button onclick="paste('pasteButton')" id="pasteButton">جایگذاری</button>
         <button onclick="deselectAll(); document.getElementById('control').innerHTML = ''">در آوردن از انتخاب</button>
         <button onclick="CRWTP()">انتخاب رندوم</button>
         <button onclick="openFolder('lastFolder')">پوشه ی قبلی</button>
@@ -72,6 +73,7 @@ Made by Kourosh Fathabadi-->
         let locationFolder = "/";
         let folderWords;
         let folders;
+        let clipBoard;
         view();
         function view() {
             const contents = document.getElementById("contents");
@@ -83,7 +85,7 @@ Made by Kourosh Fathabadi-->
             if (locationFolder != "/کلمات پیش فرض/") {
                 folderWords = localStorage.getItem(`Word location:${locationFolder} -g`).split("\n").filter(word => word.length > 0).sort();
             } else {
-                folderWords = ["سلامت", "لوستر", "مرجان", "مهتاب", "ناخدا", "نیسان", "وگرنه", "پرواز", "پیشرو", "کوروش", "کوییک"];
+                folderWords = ["سلامت", "لوستر", "مرجان", "مهتاب", "ناخدا", "نیسان", "وگرنه", "پرنده", "پرواز", "پیشرو", "کوروش", "کوییک"];
             }
             let counter = 0;
             while (counter < folderWords.length) {
@@ -91,8 +93,9 @@ Made by Kourosh Fathabadi-->
                     className: "wordsAndFolders",
                     dir: "auto"
                 });
-                let thisWord = folderWords[counter];
+                const thisWord = folderWords[counter];
                 let onclickEditControl = `
+                <button onclick="clipBoard = '${thisWord}'">کپی</button>
                 <button onclick="folderWords.splice(${counter}, 1); saveWords()">حذف</button>
                 <input dir="auto" placeholder="ویرایش" id="editWord">
                 <button onclick="let word = document.getElementById('editWord').value; if (checkWord(word, 'editWord')) {folderWords[${counter}] = word; view()}">ثبت</button>
@@ -100,9 +103,12 @@ Made by Kourosh Fathabadi-->
                 `;
                 wordDiv.onclick = function () {
                     deselectAll();
-                    wordDiv.style.backgroundColor = "rgb(100, 100, 255)";
+                    wordDiv.style.backgroundColor = "rgb(0, 100, 255)";
                     if (locationFolder == "/کلمات پیش فرض/") {
-                        onclickEditControl = `<button onclick="localStorage.setItem('cache-g', '${thisWord}'); window.location.href = 'game.html'">باز کردن</button>`;
+                        onclickEditControl = `
+                        <button onclick="clipBoard = '${thisWord}'">کپی</button>
+                        <button onclick="localStorage.setItem('cache-g', '${thisWord}'); window.location.href = 'game.html'">باز کردن</button>
+                        `;
                     }
                     control.innerHTML = onclickEditControl;
                 };
@@ -125,8 +131,10 @@ Made by Kourosh Fathabadi-->
                     className: "wordsAndFolders",
                     dir: "auto"
                 });
-                let thisFolder = folders[counter].replaceAll("'", "\\'");
-                let onclickEditControl = `
+                const thisFolder = folders[counter].replaceAll("'", "\\'");
+                const folderItems = localStorage.getItem(`Word location:${locationFolder + thisFolder} -g`).split("\n");
+                const onclickEditControl = `
+                <button onclick="clipBoard = ['${folderItems.join("', '")}', '${thisFolder.slice(0, thisFolder.length - 1)}']">کپی</button>
                 <button onclick="localStorages.filter(LSF => LSF.startsWith('Word location:' + '${locationFolder + thisFolder}')).map(LSF => localStorage.removeItem(LSF)); view()">حذف</button>
                 <input dir="auto" placeholder="ویرایش" id="editFolderName">
                 <button onclick="renameFolder(document.getElementById('editFolderName').value, '${thisFolder}', 'editFolderName')">ثبت</button>
@@ -134,7 +142,7 @@ Made by Kourosh Fathabadi-->
                 `;
                 folderDiv.onclick = function () {
                     deselectAll();
-                    folderDiv.style.backgroundColor = "rgb(100, 100, 255)";
+                    folderDiv.style.backgroundColor = "rgb(0, 100, 255)";
                     control.innerHTML = onclickEditControl;
                 };
                 folderDiv.ondblclick = function () {
@@ -146,7 +154,7 @@ Made by Kourosh Fathabadi-->
                     openFolder(thisFolder);
                 });
                 contents.appendChild(folderDiv);
-                if (localStorage.getItem(`Word location:${locationFolder + thisFolder} -g`) != "") {
+                if (folderItems != [""]) {
                     folderDiv.appendChild(Object.assign(document.createElement("img"), { src: "word mgr/full folder.png" }));
                 } else {
                     folderDiv.appendChild(Object.assign(document.createElement("img"), { src: "word mgr/empty folder.png" }));
@@ -161,7 +169,7 @@ Made by Kourosh Fathabadi-->
                 });
                 folderKPF.onclick = function () {
                     deselectAll();
-                    folderKPF.style.backgroundColor = "rgb(100, 100, 255)";
+                    folderKPF.style.backgroundColor = "rgb(0, 100, 255)";
                     control.innerHTML = `<button onclick="deselectAll(); control.innerHTML = ''; openFolder('KPF')">باز کردن</button>`;
                 };
                 folderKPF.ondblclick = function () {
@@ -192,9 +200,10 @@ Made by Kourosh Fathabadi-->
             }
         }
         function newFolder() {
-            let folder = document.getElementById("newfolder").value;
+            const folder = document.getElementById("newfolder").value;
             if (checkFolderName(folder, "newfolder")) {
                 localStorage.setItem(`Word location:${locationFolder + folder}/ -g`, "");
+                view();
             }
         }
         function checkWord(word, SID) {
@@ -266,11 +275,6 @@ Made by Kourosh Fathabadi-->
                 view();
             }
         }
-        function deselectAll() {
-            document.querySelectorAll(".wordsAndFolders").forEach(function (wordOrFolder) {
-                wordOrFolder.style.backgroundColor = "";
-            });
-        }
         function CRWTP() {
             const wordsNumber = folderWords.length;
             if (wordsNumber >= 2) {
@@ -281,11 +285,52 @@ Made by Kourosh Fathabadi-->
                 document.getElementById("alertp").innerText = "در بازی باید بیشتر از 2 کلمه باشد تا شما بازی با انتخاب رندوم کنید.";
             }
         }
-        document.addEventListener("keydown", function (keydeselect) {
-            let keydowned = keydeselect.key;
+        function deselectAll() {
+            document.querySelectorAll(".wordsAndFolders").forEach(function (wordOrFolder) {
+                wordOrFolder.style.backgroundColor = "";
+            });
+        }
+        function paste(SID) {
+            if (Array.isArray(clipBoard)) {
+                const folderName = clipBoard.pop();
+                if (checkFolderName(folderName, SID)) {
+                    clipBoard.pop();
+                    localStorage.setItem(`Word location:${locationFolder + folderName}/ -g`, clipBoard.join("\n"));
+                    view();
+                }
+            } else if (clipBoard != undefined) {
+                if (checkWord(clipBoard, SID)) {
+                    folderWords.push(clipBoard);
+                    saveWords();
+                }
+            } else {
+                CWT("alert", "SBE");
+                CWT(SID, "shake");
+                alertp.innerText = "پوشه ای هنوز کپی نشده است.";
+            }
+        }
+        document.addEventListener("keydown", function (keypushed) {
+            const keydowned = keypushed.key;
             if (keydowned == "d" || keydowned == "D" || keydowned == "ی") {
                 deselectAll();
                 control.innerHTML = "";
+            } else if (keydowned == "c" || keydowned == "C" || keydowned == "ز") {
+                document.body.querySelectorAll("div").forEach(function (wordOrFolder) {
+                    if (wordOrFolder.style.backgroundColor == "rgb(0, 100, 255)") {
+                        const itemName = wordOrFolder.querySelector("p").innerHTML;
+                        if (wordOrFolder.querySelector("img").src.endsWith("folder.png") && wordOrFolder.querySelector("img").src.endsWith("word%20mgr/lock%20folder.png") == false) {
+                            clipBoard = localStorage.getItem(`Word location:${locationFolder + itemName}/ -g`).split("\n");
+                            clipBoard.push(itemName);
+                        } else if (wordOrFolder.querySelector("img").src.endsWith("word%20mgr/word.png")) {
+                            clipBoard = itemName;
+                        } else {
+                            CWT("alert", "SBE");
+                            alertp.innerText = "پوشه قفل را نمیتوان کپی کرد.";
+                        }
+                    }
+                });
+            } else if (keydowned == "v" || keydowned == "V" || keydowned == "ر") {
+                paste();
             }
         });
     </script>

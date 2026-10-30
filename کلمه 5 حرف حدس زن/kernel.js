@@ -91,12 +91,14 @@ function random(max = 0, min = 0) {
     return output;
 }
 function CWT(id, classFE, time = 1000) {
-    document.getElementById(id).classList.add(classFE);
-    setTimeout(function () {
-        if (document.getElementById(id) != null) {
-            document.getElementById(id).classList.remove(classFE);
-        }
-    }, time);
+    if (id != undefined) {
+        document.getElementById(id).classList.add(classFE);
+        setTimeout(function () {
+            if (document.getElementById(id) != null) {
+                document.getElementById(id).classList.remove(classFE);
+            }
+        }, time);
+    }
 }
 function hold(element, functionHold, repeat) {
     element.addEventListener("pointerdown", function () {
