@@ -154,10 +154,10 @@ Made by Kourosh Fathabadi-->
                     openFolder(thisFolder);
                 });
                 contents.appendChild(folderDiv);
-                if (folderItems != [""]) {
-                    folderDiv.appendChild(Object.assign(document.createElement("img"), { src: "word mgr/full folder.png" }));
-                } else {
+                if (localStorage.getItem(`Word location:${locationFolder + thisFolder} -g`) == "") {
                     folderDiv.appendChild(Object.assign(document.createElement("img"), { src: "word mgr/empty folder.png" }));
+                } else {
+                    folderDiv.appendChild(Object.assign(document.createElement("img"), { src: "word mgr/full folder.png" }));
                 }
                 folderDiv.appendChild(Object.assign(document.createElement("p"), { innerHTML: thisFolder.slice(0, thisFolder.length - 1).replaceAll("\\'", "'") }));
                 counter++;
