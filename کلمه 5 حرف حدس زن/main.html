@@ -10,6 +10,13 @@ Made by Kourosh Fathabadi-->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
     <meta name="msvalidate.01" content="B760332CD52E9B592E375D808E6BBC21" />
+    <style>
+        .folder {
+            display: inline-block;
+            border-radius: 0px;
+            margin: 1%;
+        }
+    </style>
     <script src="kernel.js"></script>
     <script>
         if (localStorage.getItem("money-g") == null || localStorage.getItem("Word location:/ -g") == null || localStorage.getItem("startHour-g") == null || localStorage.getItem("day-g") == null) {
@@ -25,13 +32,45 @@ Made by Kourosh Fathabadi-->
     <img src="icon.png">
     <div class="line"></div>
     <h1>کلمه 5 حرف حدس زن</h1>
-    <p id="alert" style="color: red;"></p>
     <button onclick="WordMGR()" class="BM">مدیر کلمات داخلی</button>
     <button onclick="giveMoneyDay()" id="BMD" class="BM">پول روزانه</button>
     <button onclick="controlPanel()" class="BM">پنل کنترل</button>
+    <p id="alert" style="color: red;"></p>
+    <h1>دسترسی سریع انتخاب رندوم:</h1>
+    <div class="folder" onclick="localStorage.setItem('cache-g', KPF[random(KPF.length - 1)]); window.location.href = 'game.html'">
+        <img src="word mgr/lock folder.png">
+        <p>/کلمات پیش فرض/</p>
+    </div>
     <script src="https://kourosh394.github.io/HTML-change-fast-files/کلمه%205%20حرف%20حدس%20زن/versionDay.js"></script>
     <script>
-        /*version:*/ const version = 3.2;
+        /*version:*/ const version = 3.3;
+        const alertp = document.getElementById("alert");
+        let counter = 0;
+        const folders = localStorages.filter(LSF => LSF.startsWith("Word location:"));
+        while (counter < folders.length) {
+            const folder = folders[counter];
+            const folderLabel = folder.slice(14, folder.length - 3);
+            const folderDiv = document.createElement("div");
+            folderDiv.className = "folder";
+            let imgSrc = "word mgr/full folder.png";
+            if (localStorage.getItem(folder) == "" && localStorages.filter(LSF => LSF.startsWith("Word location:/" + folderLabel)).length == 1) {
+                imgSrc = "word mgr/empty folder.png";
+            }
+            folderDiv.appendChild(Object.assign(document.createElement("img"), { src: imgSrc }));
+            folderDiv.appendChild(Object.assign(document.createElement("p"), { innerHTML: folderLabel }));
+            folderDiv.onclick = function () {
+                const words = localStorage.getItem(folder).split("\n");
+                if (words.length >= 2) {
+                    localStorage.setItem("cache-g", words[random(words.length - 1)]);
+                    window.location.href = "game.html";
+                } else {
+                    alertp.innerText = "در بازی باید بیشتر از 2 کلمه باشد تا شما بازی با انتخاب رندوم کنید.";
+                    CWT("alert", "SBE");
+                }
+            };
+            document.body.appendChild(folderDiv);
+            counter++;
+        }
         moneyG();
         music();
         let startHour = Number(localStorage.getItem("startHour-g"));

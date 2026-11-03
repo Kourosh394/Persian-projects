@@ -85,7 +85,7 @@ Made by Kourosh Fathabadi-->
             if (locationFolder != "/کلمات پیش فرض/") {
                 folderWords = localStorage.getItem(`Word location:${locationFolder} -g`).split("\n").filter(word => word.length > 0).sort();
             } else {
-                folderWords = ["سلامت", "لوستر", "مرجان", "مهتاب", "ناخدا", "نیسان", "وگرنه", "پرنده", "پرواز", "پیشرو", "کوروش", "کوییک"];
+                folderWords = KPF;
             }
             let counter = 0;
             while (counter < folderWords.length) {
@@ -154,7 +154,7 @@ Made by Kourosh Fathabadi-->
                     openFolder(thisFolder);
                 });
                 contents.appendChild(folderDiv);
-                if (localStorage.getItem(`Word location:${locationFolder + thisFolder} -g`) == "" && localStorages.filter(LSF => LSF.startsWith(`Word location:${locationFolder + thisFolder}`)).length == 1) {
+                if (localStorage.getItem(`Word location:${locationFolder + thisFolder} -g`) == "" && localStorages.filter(LSF => LSF.startsWith("Word location:" + locationFolder + thisFolder)).length == 1) {
                     folderDiv.appendChild(Object.assign(document.createElement("img"), { src: "word mgr/empty folder.png" }));
                 } else {
                     folderDiv.appendChild(Object.assign(document.createElement("img"), { src: "word mgr/full folder.png" }));
@@ -282,7 +282,7 @@ Made by Kourosh Fathabadi-->
                 window.location.href = "game.html";
             } else {
                 CWT("alert", "SBE");
-                document.getElementById("alertp").innerText = "در بازی باید بیشتر از 2 کلمه باشد تا شما بازی با انتخاب رندوم کنید.";
+                alertp.innerText = "در بازی باید بیشتر از 2 کلمه باشد تا شما بازی با انتخاب رندوم کنید.";
             }
         }
         function deselectAll() {

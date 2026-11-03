@@ -3,7 +3,8 @@ Made by Kourosh Fathabadi*/
 let money = Number(localStorage.getItem("money-g"));
 let fileVersion = false;
 let localStorages = Object.keys(localStorage).filter(LSFG => LSFG.endsWith("-g")).sort();
-let downloadLink = "https://kourosh394.github.io/Persian-projects/کلمه%205%20حرف%20حدس%20زن/کلمه%205%20حرف%20حدس%20زن.zip";
+const downloadLink = "https://kourosh394.github.io/Persian-projects/کلمه%205%20حرف%20حدس%20زن/کلمه%205%20حرف%20حدس%20زن.zip";
+const KPF = ["سلامت", "لوستر", "مرجان", "مهتاب", "ناخدا", "نیسان", "وگرنه", "پرنده", "پرواز", "پیشرو", "کوروش", "کوییک"];
 window.addEventListener("error", function (bug) {
     alert(`error: ${bug.error}.`);
     alert("لطفا به کوروش بگویید.");
