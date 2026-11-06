@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fa" dir="auto">
+<!--All rights reserved © 2026
+Made by Kourosh Fathabadi-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>بازی</title>
+    <link rel="icon" href="icon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css" media="(hover: none) and (pointer: coarse)">
+    <style>
+        body {
+            user-select: none;
+        }
+
+        .BG {
+            width: 50px;
+        }
+
+        #jone {
+            position: fixed;
+            top: 40px;
+            right: 20px;
+        }
+
+        #alert {
+            display: none;
+            color: red;
+            position: fixed;
+            bottom: 60px;
+            right: 50%;
+            transform: translateX(50%);
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .BG {
+                width: 100px;
+                margin: 10px;
+            }
+
+            #jone {
+                top: 80px;
+            }
+
+            #alert {
+                bottom: 120px;
+            }
+        }
+    </style>
+    <script>
+        const word = localStorage.getItem("cache-g");
+        if (word == null) {
+            window.location.href = 'main.html';
+        } else {
+            localStorage.removeItem("cache-g");
+        }
+    </script>
+</head>
+
+<body>
+    <h1 id="word" lang="auto" dir="auto"></h1>
+    <p id="jone"></p>
+    <button class="BG" onclick="LLE()">↑</button>
+    <button class="BG" onclick="LLF()">↑</button>
+    <button class="BG" onclick="LM()">↑</button>
+    <button class="BG" onclick="LN()">↑</button>
+    <br>
+    <button class="BG" id="engLetter" onclick="CEL()"></button>
+    <button class="BG" id="faLetter" onclick="CFL()"></button>
+    <button class="BG" id="markLetter" onclick="CM()"></button>
+    <button class="BG" id="number" onclick="CN()"></button>
+    <br>
+    <button class="BG" onclick="NLE()">↓</button>
+    <button class="BG" onclick="NLF()">↓</button>
+    <button class="BG" onclick="NM()">↓</button>
+    <button class="BG" onclick="NN()">↓</button>
+    <br>
+    <button onclick="window.location.href = 'main.html'" style="position: relative; top: 30px;">برگشت</button>
+    <p id="alert">شما پول ندارید.</p>
+    <button class="BG" id="help" onclick="help()"
+        style="position: fixed; bottom: 20px; right: 50%; transform: translateX(50%); margin: 0px; width: max-content;">💡 x3💵</button>
+    <script src="kernel.js"></script>
+    <script>
+        moneyG();
+        music();
+        const wordLenght = word.length;
+        let moneyWin = 0;
+        let jone = 15;
+        let engLetter = "A";
+        const faLetters = ["آ", "ب", "پ", "ت", "ث", "ج", "چ", "ح", "خ", "د", "ذ", "ر", "ز", "ژ", "س", "ش", "ص", "ض", "ط", "ظ", "ع", "غ", "ف", "ق", "ک", "گ", "ل", "م", "ن", "و", "ه", "ی"];
+        let faNumber = 0;
+        let faLetter = faLetters[faNumber];
+        const markLetters = ["،", "؛", "?", "؟", "!", "٫", "٬", "ـ", "…", "«", "»", "(", ")", "[", "]", "{", "}", "—", "+", "=", ".", ";", ",", "'", "\"", "_", "*", "/", "\\", "|", "@", "#", "$", "%", "&", "^", "~", "`", "<", ">"];
+        let markNumber = 0;
+        let markLetter = markLetters[markNumber];
+        let number = 0;
+        let thinkWord = "";
+        let counter = 0;
+        while (counter < wordLenght) {
+            if (word[counter] != " ") {
+                thinkWord += "-";
+            } else {
+                thinkWord += " ";
+            }
+            counter++;
+        }
+        document.body.querySelectorAll("button").forEach(function (buttons) {
+            if (buttons.innerText == "↓" || buttons.innerText == "↑") {
+                hold(buttons, function () { buttons.click() }, true);
+            }
+        });
+        document.addEventListener("keydown", function (key) {
+            const letter = key.key;
+            if (CFL(letter, true) || CEL(letter, true) || CM(letter, true) || CN(letter, true)) {
+                joneCam();
+            }
+        });
+        function WALShow() {
+            document.getElementById("word").innerText = thinkWord;
+            document.getElementById("engLetter").innerText = engLetter;
+            document.getElementById("faLetter").innerText = faLetter;
+            document.getElementById("markLetter").innerText = markLetter;
+            document.getElementById("number").innerText = number;
+            document.getElementById("jone").innerText = `جان ها: ${jone}/15`;
+            if (thinkWord == word) {
+                moneyWin = Math.round(((jone / 5) + moneyWin) * 2) / 2;
+                if (moneyWin == 0) {
+                    moneyWin = 0.5;
+                }
+                money = money + moneyWin;
+                moneyG();
+                localStorage.setItem("cache-g", word);
+                window.location.href = 'win.html';
+            } else if (jone == 0) {
+                if (money > 0) {
+                    money--;
+                    if (money == -0.5) {
+                        money = 0;
+                    }
+                    moneyG();
+                }
+                document.body.innerHTML = `<h1 style="color: red;" class="SBE"> شما باختید. کلمه: ${word}</h1>`;
+                setTimeout(function () {
+                    window.location.href = 'main.html';
+                }, 1000);
+            }
+        }
+        WALShow();
+        function NLE() {
+            engLetter = String.fromCharCode(engLetter.charCodeAt() + 1);
+            if (engLetter == "[") {
+                engLetter = "A";
+            }
+            WALShow();
+        }
+        function NLF() {
+            faNumber++;
+            if (faNumber == 32) {
+                faNumber = 0;
+            }
+            faLetter = faLetters[faNumber];
+            WALShow();
+        }
+        function LLE() {
+            engLetter = String.fromCharCode(engLetter.charCodeAt() - 1);
+            if (engLetter == "@") {
+                engLetter = "Z";
+            }
+            WALShow();
+        }
+        function LLF() {
+            faNumber--;
+            if (faNumber == -1) {
+                faNumber = 31;
+            }
+            faLetter = faLetters[faNumber];
+            WALShow();
+        }
+        function NM() {
+            markNumber++;
+            if (markNumber == 40) {
+                markNumber = 0;
+            }
+            markLetter = markLetters[markNumber];
+            WALShow();
+        }
+        function LM() {
+            markNumber--;
+            if (markNumber == -1) {
+                markNumber = 39;
+            }
+            markLetter = markLetters[markNumber];
+            WALShow();
+        }
+        function NN() {
+            number++;
+            if (number == 10) {
+                number = 0;
+            }
+            WALShow();
+        }
+        function LN() {
+            number--;
+            if (number == -1) {
+                number = 9;
+            }
+            WALShow();
+        }
+        function joneCam() {
+            if (jone != 0) {
+                jone--;
+                document.getElementById("jone").style.color = "red";
+                CWT("word", "SBE");
+                CWT("jone", "shake");
+                setTimeout(function () {
+                    if (document.getElementById("jone") != null) {
+                        document.getElementById("jone").style.color = "black";
+                    }
+                }, 1000);
+            }
+        }
+        function CFL(checkLetter = faLetter, getIsFalse) {
+            let startJoneCam = true;
+            counter = 0;
+            while (counter < wordLenght) {
+                if (word[counter] == checkLetter) {
+                    thinkWord = thinkWord.slice(0, counter) + word[counter] + thinkWord.slice(counter + 1);
+                    startJoneCam = false;
+                }
+                counter++;
+            }
+            if (checkLetter == "آ") {
+                while (counter < wordLenght) {
+                    if (word[counter] == "ا") {
+                        thinkWord = thinkWord.slice(0, counter) + "ا" + thinkWord.slice(counter + 1);
+                        startJoneCam = false;
+                    }
+                    counter++;
+                }
+            }
+            if (startJoneCam) {
+                if (getIsFalse) {
+                    return true;
+                } else {
+                    joneCam();
+                }
+            }
+            WALShow();
+        }
+        function CEL(checkLetter = engLetter, getIsFalse) {
+            let startJoneCam = true;
+            counter = 0;
+            while (counter < wordLenght) {
+                if (word[counter] == checkLetter) {
+                    thinkWord = thinkWord.slice(0, counter) + word[counter] + thinkWord.slice(counter + 1);
+                    startJoneCam = false;
+                } else if (String.fromCharCode(checkLetter.charCodeAt() + 32) == word[counter]) {
+                    thinkWord = thinkWord.slice(0, counter) + word[counter] + thinkWord.slice(counter + 1);
+                    startJoneCam = false;
+                }
+                counter++;
+            }
+            if (startJoneCam) {
+                if (getIsFalse) {
+                    return true;
+                } else {
+                    joneCam();
+                }
+            }
+            WALShow();
+        }
+        function CM(checkLetter = markLetter, getIsFalse) {
+            let startJoneCam = true;
+            counter = 0;
+            while (counter < wordLenght) {
+                if (word[counter] == checkLetter) {
+                    thinkWord = thinkWord.slice(0, counter) + word[counter] + thinkWord.slice(counter + 1);
+                    startJoneCam = false;
+                }
+                counter++;
+            }
+            if (startJoneCam) {
+                if (getIsFalse) {
+                    return true;
+                } else {
+                    joneCam();
+                }
+            }
+            WALShow();
+        }
+        function CN(checkLetter = engLetter, getIsFalse) {
+            let startJoneCam = true;
+            counter = 0;
+            while (counter < wordLenght) {
+                if (word[counter] == checkLetter) {
+                    thinkWord = thinkWord.slice(0, counter) + word[counter] + thinkWord.slice(counter + 1);
+                    startJoneCam = false;
+                } else if (String.fromCharCode(String(checkLetter).charCodeAt() + 1728) == word[counter]) {
+                    thinkWord = thinkWord.slice(0, counter) + word[counter] + thinkWord.slice(counter + 1);
+                    startJoneCam = false;
+                }
+                counter++;
+            }
+            if (startJoneCam) {
+                if (getIsFalse) {
+                    return true;
+                } else {
+                    joneCam();
+                }
+            }
+            WALShow();
+        }
+        function help() {
+            if (money >= 3) {
+                let helpLetter;
+                let NLTH = random(thinkWord.length);
+                while (thinkWord[NLTH] != "-") {
+                    NLTH = random(thinkWord.length);
+                }
+                helpLetter = word[NLTH];
+                counter = 0;
+                while (counter < thinkWord.length) {
+                    if (word[counter] == helpLetter) {
+                        thinkWord = thinkWord.slice(0, counter) + helpLetter + thinkWord.slice(counter + 1);
+                    }
+                    counter++;
+                }
+                money -= 3;
+                moneyG();
+                WALShow();
+            } else {
+                document.getElementById("alert").style.display = "block";
+                CWT("help", "SFTTXS");
+            }
+        }
+    </script>
+</body>
+
+</html>
