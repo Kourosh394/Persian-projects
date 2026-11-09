@@ -51,7 +51,7 @@ Made by Kourosh Fathabadi-->
     </div>
     <script src="https://kourosh394.github.io/HTML-change-fast-files/کلمه%20حدس%20زن/versionDay.js"></script>
     <script>
-        /*version:*/ const version = 3.6;
+        /*version:*/ const version = 3.7;
         let counter = 0;
         const folders = localStorages.filter(LSF => LSF.startsWith("Word location:"));
         while (counter < folders.length) {
@@ -60,7 +60,7 @@ Made by Kourosh Fathabadi-->
             const folderDiv = document.createElement("div");
             folderDiv.className = "folder";
             let imgSrc = "word mgr/full folder.png";
-            if (localStorage.getItem(folder) == "" && localStorages.filter(LSF => LSF.startsWith("Word location:/" + folderLabel)).length == 1) {
+            if (localStorage.getItem(folder) == "" && localStorages.filter(LSF => LSF.startsWith("Word location:" + folderLabel)).length == 1) {
                 imgSrc = "word mgr/empty folder.png";
             }
             folderDiv.appendChild(Object.assign(document.createElement("img"), { src: imgSrc }));
