@@ -3,12 +3,8 @@ Made by Kourosh Fathabadi*/
 let money = Number(localStorage.getItem("money-g"));
 let fileVersion = false;
 let localStorages = Object.keys(localStorage).filter(LSFG => LSFG.endsWith("-g")).sort();
-const downloadLink = "https://kourosh394.github.io/Persian-projects/کلمه%205%20حرف%20حدس%20زن/کلمه%20حدس%20زن.zip";
-const KPF = ["سلامت", "لوستر", "مرجان", "مهتاب", "ناخدا", "نیسان", "وگرنه", "پرنده", "پرواز", "پیشرو", "کوروش", "کوییک"];
-window.addEventListener("error", function (bug) {
-    alert(`error: ${bug.error}.`);
-    alert("لطفا به کوروش بگویید.");
-});
+const downloadLink = "https://kourosh394.github.io/Persian-projects/کلمه%20حدس%20زن/کلمه%20حدس%20زن.zip";
+const KPF = ["آموزگار", "ادب", "بهترین", "خوشحال", "دیروز", "فردا", "معلم", "نابود", "ناراحت", "پول", "پیدا", "کردگار", "گردش"];
 if (localStorage.getItem("words-g") != null) {
     localStorage.removeItem("words-g");
     localStorage.setItem("Word location:/ -g", localStorages.filter(wordLSN => wordLSN.startsWith("W")).map(wordLSN => localStorage.getItem(wordLSN)).join("\n"));
@@ -25,9 +21,15 @@ document.addEventListener("keydown", function (keydownforbug) {
 if (window.location.protocol == "file:") {
     fileVersion = true;
 }
-if (window.location.hostname != "kourosh394.github.io" && fileVersion == false) {
-    alert(`این بازی تقلبی کلمه حدس زن است. لینک تقلبی: ${decodeURIComponent(window.location.href)} لینک اصلی: https://kourosh394.github.io/Persian-projects/کلمه حدس زن/main.html OK را بزنید تا به نسخه ی اصلی بروید.`);
-    window.location.href = "https://kourosh394.github.io/Persian-projects/کلمه حدس زن/main.html";
+window.onload = function () {
+    window.addEventListener("error", function (bug) {
+        message(`error: ${bug.error}.\nلطفا به کوروش بگویید.`);
+    });
+    if (window.location.hostname != "kourosh394.github.io" && fileVersion == false) {
+        message(`این بازی تقلبی کلمه حدس زن است. لینک تقلبی: ${decodeURIComponent(window.location.href)} لینک اصلی: https://kourosh394.github.io/Persian-projects/کلمه حدس زن/main.html "بله" را بزنید تا به نسخه ی اصلی بروید.`, function () {
+            window.location.href = "https://kourosh394.github.io/Persian-projects/کلمه حدس زن/main.html";
+        });
+    }
 }
 function checkLScacheG(LSValue) {
     if (localStorage.getItem("cache-g") != LSValue) {
@@ -97,6 +99,38 @@ function CWT(id, classFE, time = 1000) {
                 document.getElementById(id).classList.remove(classFE);
             }
         }, time);
+    }
+}
+function message(messageText, yesFunction) {
+    let messageDiv;
+    if (document.body.querySelector(".message") == null) {
+        messageDiv = Object.assign(document.createElement("div"), { className: "message" })
+    } else {
+        messageDiv = document.body.querySelector(".message");
+        messageDiv.innerHTML = "";
+    }
+    function close() {
+        messageDiv.style.display = "none";
+    }
+    const header = document.createElement("header");
+    header.appendChild(Object.assign(document.createElement("p"), { innerText: "X", onclick: close }));
+    messageDiv.appendChild(header);
+    messageDiv.appendChild(Object.assign(document.createElement("p"), { innerText: messageText }));
+    if (yesFunction == undefined) {
+        messageDiv.appendChild(Object.assign(document.createElement("button"), { innerText: "باشه", onclick: close }));
+    } else {
+        messageDiv.appendChild(Object.assign(document.createElement("button"), { innerText: "خیر", onclick: close }));
+        messageDiv.appendChild(Object.assign(document.createElement("button"), {
+            innerText: "بله", onclick: function () {
+                yesFunction();
+                close();
+            }
+        }));
+    }
+    if (document.body.querySelector(".message") == null) {
+        document.body.appendChild(messageDiv);
+    } else {
+        messageDiv.style.display = "";
     }
 }
 function hold(element, functionHold, repeat) {

@@ -29,6 +29,42 @@ img {
   width: auto;
 }
 
+.message {
+  border-radius: 0px;
+  background-color: white;
+  position: fixed;
+  right: 50%;
+  bottom: 50%;
+  transform: translate(50%, 50%);
+  text-align: right;
+  width: 320px;
+}
+
+.message header {
+  background-color: blue;
+  margin: 0px;
+}
+
+.message header p {
+  right: 0px;
+  background-color: red;
+  cursor: pointer;
+  user-select: none;
+  width: 50px;
+  text-align: center;
+  margin: 10px;
+}
+
+.message p {
+  margin: 0px;
+  position: relative;
+  right: 10px;
+}
+
+.message button {
+  margin: 10px;
+}
+
 input {
   font-family: "B Homa", Arial;
   text-align: center;

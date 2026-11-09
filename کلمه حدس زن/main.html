@@ -21,6 +21,10 @@ Made by Kourosh Fathabadi-->
         .folder:hover {
             background-color: rgb(0, 100, 255);
         }
+
+        .folder:active {
+            background-color: rgb(0, 100, 255);
+        }
     </style>
     <script src="kernel.js"></script>
     <script>
@@ -37,10 +41,9 @@ Made by Kourosh Fathabadi-->
     <img src="icon.png">
     <div class="line"></div>
     <h1>کلمه حدس زن</h1>
-    <button onclick="WordMGR()" class="BM">مدیر کلمات داخلی</button>
+    <button onclick="localStorage.setItem('cache-g', 'WordMGR'); window.location.href = 'word mgr.html'" class="BM">مدیر کلمات داخلی</button>
     <button onclick="giveMoneyDay()" id="BMD" class="BM">پول روزانه</button>
     <button onclick="controlPanel()" class="BM">پنل کنترل</button>
-    <p id="alert" style="color: red;"></p>
     <h1>دسترسی سریع انتخاب رندوم:</h1>
     <div class="folder" onclick="localStorage.setItem('cache-g', KPF[random(KPF.length - 1)]); window.location.href = 'game.html'">
         <img src="word mgr/lock folder.png">
@@ -48,8 +51,7 @@ Made by Kourosh Fathabadi-->
     </div>
     <script src="https://kourosh394.github.io/HTML-change-fast-files/کلمه%20حدس%20زن/versionDay.js"></script>
     <script>
-        /*version:*/ const version = 3.5;
-        const alertp = document.getElementById("alert");
+        /*version:*/ const version = 3.6;
         let counter = 0;
         const folders = localStorages.filter(LSF => LSF.startsWith("Word location:"));
         while (counter < folders.length) {
@@ -69,8 +71,7 @@ Made by Kourosh Fathabadi-->
                     localStorage.setItem("cache-g", words[random(words.length - 1)]);
                     window.location.href = "game.html";
                 } else {
-                    alertp.innerText = "در بازی باید بیشتر از 2 کلمه باشد تا شما بازی با انتخاب رندوم کنید.";
-                    CWT("alert", "SBE");
+                    message("در بازی باید بیشتر از 2 کلمه باشد تا شما بازی با انتخاب رندوم کنید.");
                 }
             };
             document.body.appendChild(folderDiv);
@@ -84,10 +85,9 @@ Made by Kourosh Fathabadi-->
         let day = new Date().getDay();
         let getMoneyDay;
         if (navigator.onLine == true && fileVersion == true && window.versionDay > version) {
-            let asKupdate = confirm("نسخه ی جدید آمده است🥳. آیا دانلود شود؟");
-            if (asKupdate == true) {
+            message("نسخه ی جدید آمده است🥳. آیا دانلود شود؟", function () {
                 window.location.href = downloadLink;
-            }
+            });
         }
         if (dayILS < day && hour >= startHour) {
             document.getElementById("BMD").innerText = "پول روزانه همین الان";
@@ -99,10 +99,6 @@ Made by Kourosh Fathabadi-->
         } else {
             document.getElementById("BMD").innerText = "پول روزانه 1 روز دیگر";
         }
-        function WordMGR() {
-            localStorage.setItem("cache-g", "WordMGR");
-            window.location.href = 'word mgr.html';
-        }
         function giveMoneyDay() {
             if (getMoneyDay) {
                 localStorage.setItem("cache-g", "giveMoneyDay");
@@ -110,7 +106,7 @@ Made by Kourosh Fathabadi-->
                 window.location.href = 'giv mny day.html';
             } else {
                 CWT("BMD", "shake");
-                document.getElementById("alert").innerText = "شما نمیتوانید پول روزانه  بگیرید.";
+                message("شما نمیتوانید پول روزانه  بگیرید.");
             }
         }
         function controlPanel() {

@@ -62,14 +62,13 @@ Made by Kourosh Fathabadi-->
         <button onclick="openFolder('lastFolder')">پوشه ی قبلی</button>
         <button onclick="window.location.href = 'main.html'">برگشت</button>
     </div>
-    <p id="alert" style="color: red; margin: 0.5%;"></p>
+    <br>
     <div id="contents">
     </div>
     <script>
         moneyG();
         music();
         const control = document.getElementById("control");
-        const alertp = document.getElementById("alert");
         let locationFolder = "/";
         let folderWords;
         let folders;
@@ -207,41 +206,39 @@ Made by Kourosh Fathabadi-->
             }
         }
         function checkWord(word, SID) {
-            if (word.includes("-") == false && folderWords.includes(word) == false && locationFolder != "/کلمات پیش فرض/") {
-                alertp.innerText = "";
+            if (word.includes("-") == false && word.length != 0 && folderWords.includes(word) == false && locationFolder != "/کلمات پیش فرض/") {
                 return true;
             } else {
                 CWT(SID, "shake");
-                CWT("alert", "SBE");
                 if (word.includes("-")) {
-                    alertp.innerText = 'کلمه "-" دارد.';
+                    message('کلمه "-" دارد.');
+                } else if (word.length == 0) {
+                    message("نام خالی است!");
                 } else if (folderWords.includes(word)) {
-                    alertp.innerText = "کلمه اینجا با این نام هست.";
+                    message("کلمه اینجا با این نام هست.");
                 } else {
-                    alertp.innerText = "پوشه قفل است.";
+                    message("پوشه قفل است.");
                 }
                 return false;
             }
         }
         function checkFolderName(folder, SID) {
             if (folder.includes("/") == false && folders.includes(folder + "/") == false && folder.includes('"') == false && folder.length != 0 && localStorages.filter(folderName => folderName.startsWith("Word location:" + locationFolder)).join("/").replaceAll("Word location:", "").replaceAll(" -g", "").includes(folder) == false && locationFolder != "/کلمات پیش فرض/") {
-                alertp.innerText = "";
                 return true;
             } else {
                 CWT(SID, "shake");
-                CWT("alert", "SBE");
                 if (folder.includes("/")) {
-                    alertp.innerText = 'پوشه "/" دارد.';
+                    message('پوشه "/" دارد.');
                 } else if (folders.includes(folder + "/")) {
-                    alertp.innerText = "پوشه اینجا با این نام هست.";
+                    message("پوشه اینجا با این نام هست.");
                 } else if (folder.includes('"')) {
-                    alertp.innerText = 'پوشه " دارد.';
+                    message('پوشه " دارد.');
                 } else if (folder.length == 0) {
-                    alertp.innerText = "نام خالی است!";
+                    message("نام خالی است!");
                 } else if (localStorages.filter(folderName => folderName.startsWith("Word location:" + locationFolder)).join("/").replaceAll("Word location:", "").replaceAll(" -g", "").includes(folder)) {
-                    alertp.innerText = "نباید نام پوشه در زیر پوشه باشد.";
+                    message("نباید نام پوشه در زیر پوشه باشد.");
                 } else {
-                    alertp.innerText = "پوشه قفل است.";
+                    message("پوشه قفل است.");
                 }
                 return false;
             }
@@ -279,8 +276,7 @@ Made by Kourosh Fathabadi-->
                 localStorage.setItem('cache-g', folderWords[random(wordsNumber - 1)]);
                 window.location.href = "game.html";
             } else {
-                CWT("alert", "SBE");
-                alertp.innerText = "در بازی باید بیشتر از 2 کلمه باشد تا شما بازی با انتخاب رندوم کنید.";
+                message("در بازی باید بیشتر از 2 کلمه باشد تا شما بازی با انتخاب رندوم کنید.");
             }
         }
         function deselectAll() {
@@ -300,17 +296,15 @@ Made by Kourosh Fathabadi-->
                     } else if (wordOrFolder.querySelector("img").src.endsWith("word%20mgr/word.png")) {
                         clipBoard = itemName;
                     } else {
-                        CWT("alert", "SBE");
                         CWT(SID, "shake");
-                        alertp.innerText = "پوشه قفل را نمیتوان کپی کرد.";
+                        message("پوشه قفل را نمیتوان کپی کرد.");
                     }
                 }
 
             });
             if (copied == false) {
-                CWT("alert", "SBE");
                 CWT(SID, "shake");
-                alertp.innerText = "چیزی برای کپی کردن وجود ندارد.";
+                message("چیزی برای کپی کردن وجود ندارد.");
             }
         }
         function paste(SID) {
@@ -328,34 +322,39 @@ Made by Kourosh Fathabadi-->
                     saveWords();
                 }
             } else {
-                CWT("alert", "SBE");
                 CWT(SID, "shake");
-                alertp.innerText = "چیزی هنوز کپی نشده است.";
+                message("چیزی هنوز کپی نشده است.");
             }
         }
         function deleteSLD(SID) {
             let deleted = false;
             document.body.querySelectorAll("div").forEach(function (wordOrFolder) {
+                deleted = true;
                 if (wordOrFolder.style.backgroundColor == "rgb(0, 100, 255)") {
-                    deleted = true;
-                    const itemName = wordOrFolder.querySelector("p").innerHTML;
-                    if (wordOrFolder.querySelector("img").src.endsWith("folder.png") && wordOrFolder.querySelector("img").src.endsWith("word%20mgr/lock%20folder.png") == false) {
-                        localStorages.filter(LSF => LSF.startsWith("Word location:" + locationFolder + itemName)).map(LSF => localStorage.removeItem(LSF));
-                        view();
-                    } else if (wordOrFolder.querySelector("img").src.endsWith("word%20mgr/word.png")) {
-                        folderWords.splice(folderWords.indexOf(itemName), 1);
-                        saveWords();
+                    if (locationFolder != "/کلمات پیش فرض/" && wordOrFolder.querySelector("img").src.endsWith("word%20mgr/lock%20folder.png") == false) {
+                        message("آیا حذف شود؟", function () {
+                            const itemName = wordOrFolder.querySelector("p").innerHTML;
+                            if (wordOrFolder.querySelector("img").src.endsWith("folder.png")) {
+                                localStorages.filter(LSF => LSF.startsWith("Word location:" + locationFolder + itemName)).map(LSF => localStorage.removeItem(LSF));
+                                view();
+                            } else if (wordOrFolder.querySelector("img").src.endsWith("word%20mgr/word.png")) {
+                                folderWords.splice(folderWords.indexOf(itemName), 1);
+                                saveWords();
+                            } else {
+                                CWT(SID, "shake");
+                                message("پوشه قفل را نمیتوان حذف کرد.");
+                            }
+                        });
+                    } else if (locationFolder == "/کلمات پیش فرض/") {
+                        message("پوشه قفل است.");
                     } else {
-                        CWT("alert", "SBE");
-                        CWT(SID, "shake");
-                        alertp.innerText = "پوشه قفل را نمیتوان پاک کرد.";
+                        message("پوشه قفل را نمیتوان حذف کرد.");
                     }
                 }
             });
             if (deleted == false) {
-                CWT("alert", "SBE");
                 CWT(SID, "shake");
-                alertp.innerText = "چیزی برای پاک کردن وجود ندارد.";
+                message("چیزی برای حذف کردن وجود ندارد.");
             }
         }
         document.addEventListener("keydown", function (keypushed) {

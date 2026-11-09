@@ -24,15 +24,6 @@ Made by Kourosh Fathabadi-->
             right: 20px;
         }
 
-        #alert {
-            display: none;
-            color: red;
-            position: fixed;
-            bottom: 60px;
-            right: 50%;
-            transform: translateX(50%);
-        }
-
         @media (hover: none) and (pointer: coarse) {
             .BG {
                 width: 100px;
@@ -41,10 +32,6 @@ Made by Kourosh Fathabadi-->
 
             #jone {
                 top: 80px;
-            }
-
-            #alert {
-                bottom: 120px;
             }
         }
     </style>
@@ -77,7 +64,6 @@ Made by Kourosh Fathabadi-->
     <button class="BG" onclick="NN()">↓</button>
     <br>
     <button onclick="window.location.href = 'main.html'" style="position: relative; top: 30px;">برگشت</button>
-    <p id="alert">شما پول ندارید.</p>
     <button class="BG" id="help" onclick="help()"
         style="position: fixed; bottom: 20px; right: 50%; transform: translateX(50%); margin: 0px; width: max-content;">💡 x3💵</button>
     <script src="kernel.js"></script>
@@ -231,6 +217,7 @@ Made by Kourosh Fathabadi-->
                 counter++;
             }
             if (checkLetter == "آ") {
+                counter = 0;
                 while (counter < wordLenght) {
                     if (word[counter] == "ا") {
                         thinkWord = thinkWord.slice(0, counter) + "ا" + thinkWord.slice(counter + 1);
@@ -289,7 +276,7 @@ Made by Kourosh Fathabadi-->
             }
             WALShow();
         }
-        function CN(checkLetter = engLetter, getIsFalse) {
+        function CN(checkLetter = number, getIsFalse) {
             let startJoneCam = true;
             counter = 0;
             while (counter < wordLenght) {
@@ -330,8 +317,7 @@ Made by Kourosh Fathabadi-->
                 moneyG();
                 WALShow();
             } else {
-                document.getElementById("alert").style.display = "block";
-                CWT("help", "SFTTXS");
+                message("شما پول ندارید.");
             }
         }
     </script>
