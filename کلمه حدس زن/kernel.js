@@ -156,7 +156,7 @@ function hold(element, functionHold, repeat) {
         }
     });
 }
-function giveTextFile(element = document.body.appendChild(Object.assign(document.createElement("input"), { type: "file", accept: ".js" }))) {
+function giveTextFile(element = document.body.appendChild(Object.assign(document.createElement("input"), { type: "file", accept: ".KHZrp" }))) {
     element.click();
     return new Promise(function (returnText) {
         element.addEventListener("change", async function () {
@@ -182,7 +182,7 @@ async function getRestorePoint(doWorkWith) {
 function createRestorePoint() {
     let downloadRP = document.createElement("a");
     downloadRP.href = URL.createObjectURL(new Blob([localStorages.map(word => `localStorage.setItem("${word}", "${localStorage.getItem(word).replaceAll("\n", "\\n")}");`).join("\n")], { type: "text/plain" }));
-    downloadRP.download = "نقطه ی بازیابی.js";
+    downloadRP.download = "نقطه ی بازیابی.KHZrp";
     downloadRP.click();
 }
 function deleteAllData() {

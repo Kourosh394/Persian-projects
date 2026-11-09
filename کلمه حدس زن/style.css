@@ -6,6 +6,7 @@
 body {
   background-color: skyblue;
   font-family: "B Homa", Arial;
+  text-shadow: 10px 10px 10px gray;
   font-size: 25px;
   text-align: center;
   touch-action: manipulation;
@@ -14,6 +15,7 @@ body {
 button {
   font-family: "B Homa", Arial;
   font-size: 25px;
+  box-shadow: 10px 10px 10px gray;
   background-color: green;
   color: white;
   border-radius: 20px;
@@ -47,12 +49,19 @@ img {
 
 .message header p {
   right: 0px;
-  background-color: red;
   cursor: pointer;
   user-select: none;
   width: 50px;
   text-align: center;
   margin: 10px;
+}
+
+.message header p:hover {
+  background-color: red;
+}
+
+.message header p:active {
+  background-color: red;
 }
 
 .message p {
